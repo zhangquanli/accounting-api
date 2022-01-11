@@ -1,6 +1,6 @@
 package com.github.zhangquanli.accounting.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +16,7 @@ import java.math.BigDecimal;
  *
  * @author zhangquanli
  * @since 2021/12/22 8:50:00
+ * @since 2021/12/22 8:50:00
  */
 @Entity
 @Getter
@@ -23,20 +24,10 @@ import java.math.BigDecimal;
 public class SubjectBalance extends BaseEntity {
 
     /**
-     * 期初类型
-     */
-    @Column(nullable = false)
-    private Type initialType;
-    /**
-     * 期初金额
+     * 初始金额
      */
     @Column(nullable = false)
     private BigDecimal initialAmount;
-    /**
-     * 当前类型
-     */
-    @Column(nullable = false)
-    private Type currentType;
     /**
      * 当前金额
      */
@@ -52,7 +43,7 @@ public class SubjectBalance extends BaseEntity {
     /**
      * 关联的会计账簿
      */
-    @JsonIgnore
+    @JsonIgnoreProperties({"subjectBalances"})
     @ManyToOne
     @JoinColumn(nullable = false)
     private Account account;

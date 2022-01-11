@@ -55,27 +55,4 @@ public class Subject extends BaseEntity {
     @Column(nullable = false)
     private String parentNum;
 
-    public enum Category {
-        /**
-         * 资产类
-         */
-        ASSETS,
-        /**
-         * 负债类
-         */
-        LIABILITY,
-        /**
-         * 所有者权益
-         */
-        OWNERS_EQUITY,
-        /**
-         * 成本类
-         */
-        COST,
-        /**
-         * 损益类
-         */
-        PROFIT_AND_LOSS,
-    }
-
 }

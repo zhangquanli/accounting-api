@@ -2,7 +2,6 @@ package com.github.zhangquanli.accounting.service.impl;
 
 import com.github.zhangquanli.accounting.entity.Account;
 import com.github.zhangquanli.accounting.entity.SubjectBalance;
-import com.github.zhangquanli.accounting.entity.Type;
 import com.github.zhangquanli.accounting.repository.AccountRepository;
 import com.github.zhangquanli.accounting.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +35,7 @@ public class AccountServiceImpl implements AccountService {
     public void insert(Account account) {
         account.setId(null);
         for (SubjectBalance balance : account.getSubjectBalances()) {
-            balance.setInitialType(Type.DEBIT);
             balance.setInitialAmount(BigDecimal.ZERO);
-            balance.setCurrentType(Type.DEBIT);
             balance.setCurrentAmount(BigDecimal.ZERO);
             balance.setAccount(account);
         }

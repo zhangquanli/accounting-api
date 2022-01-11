@@ -1,5 +1,6 @@
 package com.github.zhangquanli.accounting.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,21 +36,22 @@ public class AccountingEntry extends BaseEntity {
      */
     private String summary;
     /**
-     * 科目
+     * 科目余额
      */
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Subject subject;
+    private SubjectBalance subjectBalance;
+    /**
+     * 凭证
+     */
+    @JsonIgnoreProperties("accountingEntries")
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Voucher voucher;
     /**
      * 标签集合
      */
     @ManyToMany
     private List<Label> labels;
-    /**
-     * 凭证
-     */
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Voucher voucher;
 
 }

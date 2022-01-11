@@ -3,7 +3,6 @@ package com.github.zhangquanli.accounting.controller;
 import com.github.zhangquanli.accounting.entity.Account;
 import com.github.zhangquanli.accounting.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public void insert( @RequestBody Account account) {
+    public void insert(@RequestBody Account account) {
         accountService.insert(account);
     }
 
