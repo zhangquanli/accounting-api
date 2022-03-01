@@ -1,4 +1,4 @@
-package com.github.zhangquanli.accounting.req;
+package com.github.zhangquanli.accounting.query;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class PageReq {
+public class PageQuery {
     @NotNull
     private Integer page;
     @NotNull

@@ -16,7 +16,6 @@ import java.math.BigDecimal;
  *
  * @author zhangquanli
  * @since 2021/12/22 8:50:00
- * @since 2021/12/22 8:50:00
  */
 @Entity
 @Getter

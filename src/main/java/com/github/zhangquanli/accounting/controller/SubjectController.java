@@ -1,6 +1,7 @@
 package com.github.zhangquanli.accounting.controller;
 
 import com.github.zhangquanli.accounting.entity.Subject;
+import com.github.zhangquanli.accounting.query.SubjectQuery;
 import com.github.zhangquanli.accounting.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -27,8 +28,8 @@ public class SubjectController {
     }
 
     @GetMapping
-    public List<Subject> select() {
-        return subjectService.select();
+    public List<Subject> select(SubjectQuery subjectQuery) {
+        return subjectService.select(subjectQuery);
     }
 
     @PostMapping

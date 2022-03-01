@@ -1,7 +1,7 @@
 package com.github.zhangquanli.accounting.service;
 
 import com.github.zhangquanli.accounting.entity.Voucher;
-import com.github.zhangquanli.accounting.req.VoucherReq;
+import com.github.zhangquanli.accounting.query.VoucherQuery;
 import org.springframework.data.domain.Page;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
  * @since 2021/12/21 16:41:00
  */
 public interface VoucherService {
-    Page<Voucher> select(VoucherReq voucherReq);
+    Page<Voucher> select(VoucherQuery voucherReq);
 
     Voucher get(Integer id);
 

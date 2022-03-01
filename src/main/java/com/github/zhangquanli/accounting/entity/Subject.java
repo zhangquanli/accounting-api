@@ -35,9 +35,14 @@ public class Subject extends BaseEntity {
     /**
      * 分类
      */
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Category category;
+    /**
+     * 适用范围
+     */
+    private String scope;
     /**
      * 编号
      * <p>

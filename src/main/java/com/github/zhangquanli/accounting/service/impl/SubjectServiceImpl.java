@@ -2,12 +2,16 @@ package com.github.zhangquanli.accounting.service.impl;
 
 import com.github.zhangquanli.accounting.entity.Subject;
 import com.github.zhangquanli.accounting.exception.EntityNonExistException;
+import com.github.zhangquanli.accounting.query.SubjectQuery;
 import com.github.zhangquanli.accounting.repository.SubjectRepository;
 import com.github.zhangquanli.accounting.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,8 +32,29 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> select() {
-        return subjectRepository.findAll();
+    public List<Subject> select(SubjectQuery subjectQuery) {
+        Specification<Subject> specification = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            // 代码
+            if (subjectQuery.getCode() != null) {
+                Predicate predicate = criteriaBuilder.like(root.get("code"),
+                        "%" + subjectQuery.getCode() + "%");
+                predicates.add(predicate);
+            }
+            // 名称
+            if (subjectQuery.getName() != null) {
+                Predicate predicate = criteriaBuilder.like(root.get("name"),
+                        "%" + subjectQuery.getName() + "%");
+                predicates.add(predicate);
+            }
+            // 分类
+            if (subjectQuery.getCategory() != null) {
+                Predicate predicate = criteriaBuilder.equal(root.get("category"), subjectQuery.getCategory());
+                predicates.add(predicate);
+            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        return subjectRepository.findAll(specification);
     }
 
     @Override

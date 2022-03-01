@@ -1,7 +1,7 @@
 package com.github.zhangquanli.accounting.service;
 
 import com.github.zhangquanli.accounting.entity.AccountingEntry;
-import com.github.zhangquanli.accounting.req.AccountingEntryReq;
+import com.github.zhangquanli.accounting.query.AccountingEntryQuery;
 import org.springframework.data.domain.Page;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.data.domain.Page;
  * @since 2022/1/5 10:12:00
  */
 public interface AccountingEntryService {
-    Page<AccountingEntry> select(AccountingEntryReq accountingEntryReq);
+    Page<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery);
 }

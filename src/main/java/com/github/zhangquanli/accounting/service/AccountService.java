@@ -1,6 +1,7 @@
 package com.github.zhangquanli.accounting.service;
 
 import com.github.zhangquanli.accounting.entity.Account;
+import com.github.zhangquanli.accounting.query.AccountQuery;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ import java.util.List;
  * @since 2021/12/22 10:40:00
  */
 public interface AccountService {
-    List<Account> select();
+    List<Account> select(AccountQuery accountQuery);
 
     void insert(Account account);
+
+    void update(Integer id, Account account);
 }

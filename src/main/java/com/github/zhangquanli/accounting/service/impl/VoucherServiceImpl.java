@@ -8,7 +8,7 @@ import com.github.zhangquanli.accounting.exception.EntityNonExistException;
 import com.github.zhangquanli.accounting.repository.LabelRepository;
 import com.github.zhangquanli.accounting.repository.SubjectBalanceRepository;
 import com.github.zhangquanli.accounting.repository.VoucherRepository;
-import com.github.zhangquanli.accounting.req.VoucherReq;
+import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,24 +54,24 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public Page<Voucher> select(VoucherReq voucherReq) {
-        int page = voucherReq.getPage() - 1;
-        int size = voucherReq.getSize();
+    public Page<Voucher> select(VoucherQuery voucherQuery) {
+        int page = voucherQuery.getPage() - 1;
+        int size = voucherQuery.getSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
         PageRequest pageRequest = PageRequest.of(page, size, sort);
         Specification<Voucher> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             // 编号
-            if (voucherReq.getNum() != null) {
+            if (voucherQuery.getNum() != null) {
                 Predicate predicate1 = criteriaBuilder.like(root.get("num"),
-                        "%" + voucherReq.getNum() + "%");
+                        "%" + voucherQuery.getNum() + "%");
                 predicates.add(predicate1);
             }
             // 记账日期
-            if (voucherReq.getStartAccountDate() != null
-                    && voucherReq.getEndAccountDate() != null) {
+            if (voucherQuery.getStartAccountDate() != null
+                    && voucherQuery.getEndAccountDate() != null) {
                 Predicate predicate2 = criteriaBuilder.between(root.get("accountDate"),
-                        voucherReq.getStartAccountDate(), voucherReq.getEndAccountDate());
+                        voucherQuery.getStartAccountDate(), voucherQuery.getEndAccountDate());
                 predicates.add(predicate2);
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

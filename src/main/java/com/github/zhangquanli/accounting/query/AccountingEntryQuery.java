@@ -1,4 +1,4 @@
-package com.github.zhangquanli.accounting.req;
+package com.github.zhangquanli.accounting.query;
 
 import com.github.zhangquanli.accounting.entity.Type;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class AccountingEntryReq {
+public class AccountingEntryQuery {
 
     /**
      * 借贷类型

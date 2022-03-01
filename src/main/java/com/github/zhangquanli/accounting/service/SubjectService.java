@@ -1,6 +1,7 @@
 package com.github.zhangquanli.accounting.service;
 
 import com.github.zhangquanli.accounting.entity.Subject;
+import com.github.zhangquanli.accounting.query.SubjectQuery;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @since 2021/12/20 11:18:00
  */
 public interface SubjectService {
-    List<Subject> select();
+    List<Subject> select(SubjectQuery subjectQuery);
 
     void insert(Subject subject);
 

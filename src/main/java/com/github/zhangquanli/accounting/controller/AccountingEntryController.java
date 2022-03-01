@@ -1,7 +1,7 @@
 package com.github.zhangquanli.accounting.controller;
 
 import com.github.zhangquanli.accounting.entity.AccountingEntry;
-import com.github.zhangquanli.accounting.req.AccountingEntryReq;
+import com.github.zhangquanli.accounting.query.AccountingEntryQuery;
 import com.github.zhangquanli.accounting.service.AccountingEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ public class AccountingEntryController {
     }
 
     @GetMapping
-    public Page<AccountingEntry> select(@RequestBody AccountingEntryReq accountingEntryReq) {
-        return accountingEntryService.select(accountingEntryReq);
+    public Page<AccountingEntry> select(@RequestBody AccountingEntryQuery accountingEntryQuery) {
+        return accountingEntryService.select(accountingEntryQuery);
     }
 }

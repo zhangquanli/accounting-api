@@ -31,7 +31,16 @@ public enum Category {
         }
     },
     /**
-     * 所有者权益
+     * 共同类
+     */
+    COMMON {
+        @Override
+        public BigDecimal symbol(Type type) {
+            return type.symbol();
+        }
+    },
+    /**
+     * 所有者权益类
      */
     OWNERS_EQUITY {
         @Override

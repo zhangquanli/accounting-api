@@ -1,7 +1,7 @@
 package com.github.zhangquanli.accounting.controller;
 
 import com.github.zhangquanli.accounting.entity.Voucher;
-import com.github.zhangquanli.accounting.req.VoucherReq;
+import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,7 @@ public class VoucherController {
     }
 
     @GetMapping
-    public Page<Voucher> select(VoucherReq voucherReq) {
+    public Page<Voucher> select(VoucherQuery voucherReq) {
         return voucherService.select(voucherReq);
     }
 
@@ -40,6 +40,5 @@ public class VoucherController {
     public void insert(@Validated @RequestBody Voucher voucher) {
         voucherService.insert(voucher);
     }
-
     
 }
