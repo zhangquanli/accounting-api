@@ -30,7 +30,7 @@ public class Account extends BaseEntity {
      * 关联的会计余额集合
      */
     @JsonIgnoreProperties({"account"})
-    @OneToMany(mappedBy = "account", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "account", cascade = {CascadeType.MERGE})
     private List<SubjectBalance> subjectBalances;
 
 }
