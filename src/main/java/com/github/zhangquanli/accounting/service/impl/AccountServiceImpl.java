@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,16 @@ public class AccountServiceImpl implements AccountService {
             }
         }
         accountRepository.save(account);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        accountRepository.deleteById(id);
+    }
+
+    @Override
+    public Account selectOne(Integer id) {
+        return accountRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
 }

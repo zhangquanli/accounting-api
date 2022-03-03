@@ -17,4 +17,8 @@ public interface AccountService {
     void insert(Account account);
 
     void update(Integer id, Account account);
+
+    void delete(Integer id);
+
+    Account selectOne(Integer id);
 }

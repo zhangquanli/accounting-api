@@ -4,11 +4,10 @@ import com.github.zhangquanli.accounting.entity.AccountingEntry;
 import com.github.zhangquanli.accounting.entity.Label;
 import com.github.zhangquanli.accounting.entity.SubjectBalance;
 import com.github.zhangquanli.accounting.entity.Voucher;
-import com.github.zhangquanli.accounting.exception.EntityNonExistException;
+import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.repository.LabelRepository;
 import com.github.zhangquanli.accounting.repository.SubjectBalanceRepository;
 import com.github.zhangquanli.accounting.repository.VoucherRepository;
-import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Predicate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -80,8 +80,8 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public Voucher get(Integer id) {
-        return voucherRepository.findById(id).orElseThrow(EntityNonExistException::new);
+    public Voucher selectOne(Integer id) {
+        return voucherRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(rollbackFor = RuntimeException.class)
@@ -93,7 +93,7 @@ public class VoucherServiceImpl implements VoucherService {
             // 科目余额
             Integer subjectBalanceId = accountingEntry.getSubjectBalance().getId();
             SubjectBalance subjectBalance = subjectBalanceRepository.findById(subjectBalanceId)
-                    .orElseThrow(EntityNonExistException::new);
+                    .orElseThrow(EntityNotFoundException::new);
             BigDecimal symbol = subjectBalance.getSubject().getCategory().symbol(accountingEntry.getType());
             BigDecimal currentAmount = accountingEntry.getAmount().multiply(symbol)
                     .add(subjectBalance.getCurrentAmount());

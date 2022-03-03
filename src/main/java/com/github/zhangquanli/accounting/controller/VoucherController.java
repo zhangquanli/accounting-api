@@ -32,13 +32,13 @@ public class VoucherController {
     }
 
     @GetMapping("/{id}")
-    public Voucher get(@PathVariable Integer id) {
-        return voucherService.get(id);
+    public Voucher selectOne(@PathVariable Integer id) {
+        return voucherService.selectOne(id);
     }
 
     @PostMapping
     public void insert(@Validated @RequestBody Voucher voucher) {
         voucherService.insert(voucher);
     }
-    
+
 }

@@ -41,4 +41,14 @@ public class AccountController {
         accountService.update(id, account);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        accountService.delete(id);
+    }
+
+    @GetMapping("/{id}")
+    public Account selectOne(@PathVariable Integer id) {
+        return accountService.selectOne(id);
+    }
+
 }

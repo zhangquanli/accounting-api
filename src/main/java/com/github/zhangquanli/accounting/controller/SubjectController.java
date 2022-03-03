@@ -37,11 +37,6 @@ public class SubjectController {
         subjectService.insert(subject);
     }
 
-    @GetMapping("/{id}")
-    public Subject selectOne(@PathVariable Integer id) {
-        return subjectService.selectOne(id);
-    }
-
     @PutMapping("/{id}")
     public void update(@PathVariable Integer id, @Validated @RequestBody Subject subject) {
         subjectService.update(id, subject);
@@ -50,6 +45,11 @@ public class SubjectController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         subjectService.delete(id);
+    }
+
+    @GetMapping("/{id}")
+    public Subject selectOne(@PathVariable Integer id) {
+        return subjectService.selectOne(id);
     }
 
 }

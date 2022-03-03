@@ -13,7 +13,7 @@ import org.springframework.data.domain.Page;
 public interface VoucherService {
     Page<Voucher> select(VoucherQuery voucherReq);
 
-    Voucher get(Integer id);
+    Voucher selectOne(Integer id);
 
     void insert(Voucher voucher);
 }
