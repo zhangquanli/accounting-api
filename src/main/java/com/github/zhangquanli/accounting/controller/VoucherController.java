@@ -27,18 +27,18 @@ public class VoucherController {
     }
 
     @GetMapping
-    public Page<Voucher> select(VoucherQuery voucherReq) {
+    public Page<Voucher> select(@Validated VoucherQuery voucherReq) {
         return voucherService.select(voucherReq);
-    }
-
-    @GetMapping("/{id}")
-    public Voucher selectOne(@PathVariable Integer id) {
-        return voucherService.selectOne(id);
     }
 
     @PostMapping
     public void insert(@Validated @RequestBody Voucher voucher) {
         voucherService.insert(voucher);
+    }
+
+    @GetMapping("/{id}")
+    public Voucher selectOne(@PathVariable Integer id) {
+        return voucherService.selectOne(id);
     }
 
 }

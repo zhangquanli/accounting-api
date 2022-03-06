@@ -40,7 +40,7 @@ public class SubjectBalance extends BaseEntity {
     @JoinColumn(nullable = false)
     private Subject subject;
     /**
-     * 关联的会计账簿
+     * 账簿
      */
     @JsonIgnoreProperties({"subjectBalances"})
     @ManyToOne

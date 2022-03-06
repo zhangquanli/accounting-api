@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * 会计分录
- * 一个会计分录可以关联一个科目和一个凭证，一个会计分录可以关联多个标签
  *
  * @author zhangquanli
  * @since 2021/12/20 13:40:00
@@ -42,7 +41,7 @@ public class AccountingEntry extends BaseEntity {
     @JoinColumn(nullable = false)
     private SubjectBalance subjectBalance;
     /**
-     * 凭证
+     * 所属凭证
      */
     @JsonIgnoreProperties("accountingEntries")
     @ManyToOne
@@ -51,7 +50,7 @@ public class AccountingEntry extends BaseEntity {
     /**
      * 标签集合
      */
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Label> labels;
 
 }

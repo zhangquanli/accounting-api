@@ -12,6 +12,7 @@ import com.github.zhangquanli.accounting.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -58,36 +59,35 @@ public class VoucherServiceImpl implements VoucherService {
         int page = voucherQuery.getPage() - 1;
         int size = voucherQuery.getSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(page, size, sort);
         Specification<Voucher> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             // 编号
             if (voucherQuery.getNum() != null) {
-                Predicate predicate1 = criteriaBuilder.like(root.get("num"),
+                Predicate predicate = criteriaBuilder.like(root.get("num"),
                         "%" + voucherQuery.getNum() + "%");
-                predicates.add(predicate1);
+                predicates.add(predicate);
             }
             // 记账日期
-            if (voucherQuery.getStartAccountDate() != null
-                    && voucherQuery.getEndAccountDate() != null) {
-                Predicate predicate2 = criteriaBuilder.between(root.get("accountDate"),
-                        voucherQuery.getStartAccountDate(), voucherQuery.getEndAccountDate());
-                predicates.add(predicate2);
+            if (voucherQuery.getStartAccountDate() != null) {
+                Predicate predicate = criteriaBuilder.greaterThanOrEqualTo(root.get("accountDate"),
+                        voucherQuery.getStartAccountDate());
+                predicates.add(predicate);
+            }
+            if (voucherQuery.getEndAccountDate() != null) {
+                Predicate predicate = criteriaBuilder.lessThanOrEqualTo(root.get("accountDate"),
+                        voucherQuery.getEndAccountDate());
+                predicates.add(predicate);
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
-        return voucherRepository.findAll(specification, pageRequest);
-    }
-
-    @Override
-    public Voucher selectOne(Integer id) {
-        return voucherRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return voucherRepository.findAll(specification, pageable);
     }
 
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public void insert(Voucher voucher) {
-        // 会计分录关联标签
+        // 会计分录
         for (AccountingEntry accountingEntry : voucher.getAccountingEntries()) {
             accountingEntry.setVoucher(voucher);
             // 科目余额
@@ -98,7 +98,6 @@ public class VoucherServiceImpl implements VoucherService {
             BigDecimal currentAmount = accountingEntry.getAmount().multiply(symbol)
                     .add(subjectBalance.getCurrentAmount());
             subjectBalance.setCurrentAmount(currentAmount);
-            subjectBalanceRepository.save(subjectBalance);
             accountingEntry.setSubjectBalance(subjectBalance);
             // 标签集合
             if (accountingEntry.getLabels() == null
@@ -106,18 +105,18 @@ public class VoucherServiceImpl implements VoucherService {
                 continue;
             }
             List<Label> labels = accountingEntry.getLabels().stream()
-                    .map(label -> {
-                        Label newLabel = labelRepository.findByName(label.getName());
-                        if (newLabel == null) {
-                            return labelRepository.save(label);
-                        }
-                        return newLabel;
-                    }).collect(Collectors.toList());
+                    .map(label -> labelRepository.findByName(label.getName()).orElse(label))
+                    .collect(Collectors.toList());
             accountingEntry.setLabels(labels);
         }
         // 凭证
         voucher.setId(null);
         voucher.setCreateTime(LocalDateTime.now());
         voucherRepository.save(voucher);
+    }
+
+    @Override
+    public Voucher selectOne(Integer id) {
+        return voucherRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }
