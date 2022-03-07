@@ -31,6 +31,11 @@ public class AccountingEntry extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal amount;
     /**
+     * 余额
+     */
+    @Column(nullable = false)
+    private BigDecimal balance;
+    /**
      * 摘要
      */
     private String summary;

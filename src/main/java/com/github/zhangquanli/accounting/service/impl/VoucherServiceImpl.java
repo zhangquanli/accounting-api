@@ -98,6 +98,7 @@ public class VoucherServiceImpl implements VoucherService {
             BigDecimal currentAmount = accountingEntry.getAmount().multiply(symbol)
                     .add(subjectBalance.getCurrentAmount());
             subjectBalance.setCurrentAmount(currentAmount);
+            accountingEntry.setBalance(currentAmount);
             accountingEntry.setSubjectBalance(subjectBalance);
             // 标签集合
             if (accountingEntry.getLabels() == null
