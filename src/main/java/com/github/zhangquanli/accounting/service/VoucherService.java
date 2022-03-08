@@ -15,5 +15,7 @@ public interface VoucherService {
 
     void insert(Voucher voucher);
 
+    void delete(Integer id);
+
     Voucher selectOne(Integer id);
 }

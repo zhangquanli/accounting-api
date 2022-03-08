@@ -48,7 +48,7 @@ public class AccountingEntry extends BaseEntity {
     /**
      * 所属凭证
      */
-    @JsonIgnoreProperties("accountingEntries")
+    @JsonIgnoreProperties({"accountingEntries", "originalVoucher", "invalidVoucher"})
     @ManyToOne
     @JoinColumn(nullable = false)
     private Voucher voucher;
@@ -57,5 +57,23 @@ public class AccountingEntry extends BaseEntity {
      */
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Label> labels;
+
+    /**
+     * 关联的原始会计分录
+     * <p>
+     * 当前会计分录为冲红的，关联会计分录为原始的
+     */
+    @JsonIgnoreProperties({"originalAccountingEntry", "invalidAccountingEntry"})
+    @ManyToOne(fetch = FetchType.EAGER)
+    private AccountingEntry originalAccountingEntry;
+
+    /**
+     * 关联的冲红会计分录
+     * <p>
+     * 当前会计分录为原始的，关联会计分录为冲红的
+     */
+    @JsonIgnoreProperties({"originalAccountingEntry", "invalidAccountingEntry"})
+    @ManyToOne(fetch = FetchType.EAGER)
+    private AccountingEntry invalidAccountingEntry;
 
 }

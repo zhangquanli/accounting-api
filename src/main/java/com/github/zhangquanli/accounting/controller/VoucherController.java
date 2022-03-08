@@ -28,12 +28,19 @@ public class VoucherController {
 
     @GetMapping
     public Page<Voucher> select(@Validated VoucherQuery voucherReq) {
-        return voucherService.select(voucherReq);
+        Page<Voucher> select = voucherService.select(voucherReq);
+
+        return select;
     }
 
     @PostMapping
     public void insert(@Validated @RequestBody Voucher voucher) {
         voucherService.insert(voucher);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        voucherService.delete(id);
     }
 
     @GetMapping("/{id}")

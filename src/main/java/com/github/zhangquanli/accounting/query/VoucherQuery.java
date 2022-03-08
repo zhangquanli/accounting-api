@@ -20,4 +20,5 @@ public class VoucherQuery extends PageQuery {
     private LocalDate startAccountDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endAccountDate;
+    private Integer accountId;
 }
