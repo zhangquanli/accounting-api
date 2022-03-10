@@ -92,12 +92,14 @@ public class VoucherServiceImpl implements VoucherService {
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public void insert(Voucher voucher) {
+        Integer accountId = voucher.getAccount().getId();
+
         // 会计分录
         for (AccountingEntry accountingEntry : voucher.getAccountingEntries()) {
             accountingEntry.setVoucher(voucher);
             // 科目余额
-            Integer subjectBalanceId = accountingEntry.getSubjectBalance().getId();
-            SubjectBalance subjectBalance = subjectBalanceRepository.findById(subjectBalanceId)
+            Integer subjectId = accountingEntry.getSubjectBalance().getSubject().getId();
+            SubjectBalance subjectBalance = subjectBalanceRepository.findBySubject_IdAndAccount_Id(subjectId, accountId)
                     .orElseThrow(EntityNotFoundException::new);
             BigDecimal symbol = subjectBalance.getSubject().getCategory().symbol(accountingEntry.getType());
             BigDecimal currentAmount = accountingEntry.getAmount().multiply(symbol)

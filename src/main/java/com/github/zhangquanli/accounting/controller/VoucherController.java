@@ -28,9 +28,7 @@ public class VoucherController {
 
     @GetMapping
     public Page<Voucher> select(@Validated VoucherQuery voucherReq) {
-        Page<Voucher> select = voucherService.select(voucherReq);
-
-        return select;
+        return voucherService.select(voucherReq);
     }
 
     @PostMapping
