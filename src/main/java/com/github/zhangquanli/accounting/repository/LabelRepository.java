@@ -12,5 +12,5 @@ import java.util.Optional;
  * @since 2021/12/20 13:13:00
  */
 public interface LabelRepository extends JpaRepository<Label, Integer> {
-    Optional<Label> findByName(String name);
+    Optional<Label> findByMark(String mark);
 }

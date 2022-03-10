@@ -108,19 +108,30 @@ public class VoucherServiceImpl implements VoucherService {
             accountingEntry.setBalance(currentAmount);
             accountingEntry.setSubjectBalance(subjectBalance);
             // 标签集合
-            if (accountingEntry.getLabels() == null
-                    || accountingEntry.getLabels().isEmpty()) {
+            if (accountingEntry.getLabels() == null || accountingEntry.getLabels().isEmpty()) {
                 continue;
             }
-            List<Label> labels = accountingEntry.getLabels().stream()
-                    .map(label -> labelRepository.findByName(label.getName()).orElse(label))
-                    .collect(Collectors.toList());
+            List<Label> labels = getLabels(accountingEntry);
             accountingEntry.setLabels(labels);
         }
         // 凭证
         voucher.setId(null);
         voucher.setCreateTime(LocalDateTime.now());
         voucherRepository.save(voucher);
+    }
+
+    private List<Label> getLabels(AccountingEntry accountingEntry) {
+        return accountingEntry.getLabels().stream()
+                .map(label -> labelRepository.findByMark(label.getMark()).orElseGet(() -> {
+                    String[] split = label.getMark().split("-");
+                    if (split.length != 2) {
+                        throw new RuntimeException("录入的标签数据异常");
+                    }
+                    label.setName(split[0]);
+                    label.setValue(split[1]);
+                    return label;
+                }))
+                .collect(Collectors.toList());
     }
 
     @Transactional(rollbackFor = RuntimeException.class)
@@ -150,10 +161,8 @@ public class VoucherServiceImpl implements VoucherService {
             // 所属凭证
             invalidAccountingEntry.setVoucher(invalidVoucher);
             // 标签集合
-            List<Label> newLabels = accountingEntry.getLabels().stream()
-                    .map(label -> labelRepository.findByName(label.getName()).orElse(label))
-                    .collect(Collectors.toList());
-            invalidAccountingEntry.setLabels(newLabels);
+            List<Label> labels = new ArrayList<>(accountingEntry.getLabels());
+            invalidAccountingEntry.setLabels(labels);
             // 关联的原始会计分录
             invalidAccountingEntry.setOriginalAccountingEntry(accountingEntry);
             // 关联的冲红会计分录

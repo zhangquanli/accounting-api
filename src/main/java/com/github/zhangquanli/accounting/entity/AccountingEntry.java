@@ -55,7 +55,8 @@ public class AccountingEntry extends BaseEntity {
     /**
      * 标签集合
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JsonIgnoreProperties({"accountingEntries"})
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Label> labels;
 
     /**
@@ -64,7 +65,7 @@ public class AccountingEntry extends BaseEntity {
      * 当前会计分录为冲红的，关联会计分录为原始的
      */
     @JsonIgnoreProperties({"originalAccountingEntry", "invalidAccountingEntry"})
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private AccountingEntry originalAccountingEntry;
 
     /**
@@ -73,7 +74,7 @@ public class AccountingEntry extends BaseEntity {
      * 当前会计分录为原始的，关联会计分录为冲红的
      */
     @JsonIgnoreProperties({"originalAccountingEntry", "invalidAccountingEntry"})
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private AccountingEntry invalidAccountingEntry;
 
 }
