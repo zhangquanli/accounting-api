@@ -11,7 +11,7 @@
 
     <groupId>com.github.zhangquanli</groupId>
     <artifactId>accounting-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>accounting-api</name>
     <description>accounting-sister-api</description>
 
