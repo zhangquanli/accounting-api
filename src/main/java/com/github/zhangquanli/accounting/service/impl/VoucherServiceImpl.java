@@ -93,10 +93,10 @@ public class VoucherServiceImpl implements VoucherService {
     @Override
     public void insert(Voucher voucher) {
         Integer accountId = voucher.getAccount().getId();
-
         // 会计分录
         for (AccountingEntry accountingEntry : voucher.getAccountingEntries()) {
             accountingEntry.setVoucher(voucher);
+            accountingEntry.setCreateTime(LocalDateTime.now());
             // 科目余额
             Integer subjectId = accountingEntry.getSubjectBalance().getSubject().getId();
             SubjectBalance subjectBalance = subjectBalanceRepository.findBySubject_IdAndAccount_Id(subjectId, accountId)

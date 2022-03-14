@@ -1,11 +1,13 @@
 package com.github.zhangquanli.accounting.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,6 +21,10 @@ import java.util.List;
 @Setter
 public class AccountingEntry extends BaseEntity {
 
+    /**
+     * 摘要
+     */
+    private String summary;
     /**
      * 类型
      */
@@ -36,9 +42,11 @@ public class AccountingEntry extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal balance;
     /**
-     * 摘要
+     * 创建时间
      */
-    private String summary;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(nullable = false)
+    private LocalDateTime createTime;
     /**
      * 科目余额
      */

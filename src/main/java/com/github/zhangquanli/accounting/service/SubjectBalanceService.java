@@ -1,6 +1,7 @@
 package com.github.zhangquanli.accounting.service;
 
 import com.github.zhangquanli.accounting.entity.SubjectBalance;
+import com.github.zhangquanli.accounting.query.SubjectBalanceQuery;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ import java.util.List;
  * @since 2021/12/27 10:50:00
  */
 public interface SubjectBalanceService {
-    List<SubjectBalance> select(Integer accountId);
+    List<SubjectBalance> select(SubjectBalanceQuery subjectBalanceQuery);
 }

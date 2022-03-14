@@ -12,10 +12,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountQuery {
-
-    /**
-     * 名称
-     */
     private String name;
-
 }

@@ -5,7 +5,11 @@ import com.github.zhangquanli.accounting.query.AccountingEntryQuery;
 import com.github.zhangquanli.accounting.service.AccountingEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 会计分录管理
@@ -25,7 +29,8 @@ public class AccountingEntryController {
     }
 
     @GetMapping
-    public Page<AccountingEntry> select(@RequestBody AccountingEntryQuery accountingEntryQuery) {
+    public Page<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery) {
         return accountingEntryService.select(accountingEntryQuery);
     }
+
 }

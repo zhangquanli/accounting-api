@@ -2,6 +2,7 @@ package com.github.zhangquanli.accounting.service.impl;
 
 import com.github.zhangquanli.accounting.entity.Subject;
 import com.github.zhangquanli.accounting.entity.SubjectBalance;
+import com.github.zhangquanli.accounting.query.SubjectBalanceQuery;
 import com.github.zhangquanli.accounting.repository.SubjectBalanceRepository;
 import com.github.zhangquanli.accounting.repository.SubjectRepository;
 import com.github.zhangquanli.accounting.service.SubjectBalanceService;
@@ -36,15 +37,20 @@ public class SubjectBalanceServiceImpl implements SubjectBalanceService {
     }
 
     @Override
-    public List<SubjectBalance> select(Integer accountId) {
-        List<SubjectBalance> subjectBalances = subjectBalanceRepository.findByAccount_Id(accountId);
-        // 提取科目ID集合
-        List<Integer> subjectIds = extractSubjectIds(subjectBalances);
-        // 重新组装科目余额集合
-        List<Subject> subjects = subjectRepository.findByIdIn(subjectIds);
-        return subjects.stream()
-                .map(subject -> toSubjectBalance(subjectBalances, subject))
-                .collect(Collectors.toList());
+    public List<SubjectBalance> select(SubjectBalanceQuery subjectBalanceQuery) {
+        List<SubjectBalance> subjectBalances = subjectBalanceRepository.findByAccount_Id(subjectBalanceQuery.getAccountId());
+        if (subjectBalanceQuery.getIsRecursion() != null && subjectBalanceQuery.getIsRecursion()) {
+            // 提取科目ID集合
+            List<Integer> subjectIds = extractSubjectIds(subjectBalances);
+            // 重新组装科目余额集合
+            List<Subject> subjects = subjectRepository.findByIdIn(subjectIds);
+            return subjects.stream()
+                    .map(subject -> toSubjectBalance(subjectBalances, subject))
+                    .collect(Collectors.toList());
+        } else {
+            return subjectBalances;
+        }
+
     }
 
     private List<Integer> extractSubjectIds(List<SubjectBalance> subjectBalances) {

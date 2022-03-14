@@ -1,9 +1,12 @@
 package com.github.zhangquanli.accounting.controller;
 
 import com.github.zhangquanli.accounting.entity.SubjectBalance;
+import com.github.zhangquanli.accounting.query.SubjectBalanceQuery;
 import com.github.zhangquanli.accounting.service.SubjectBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -25,8 +28,8 @@ public class SubjectBalanceController {
     }
 
     @GetMapping
-    public List<SubjectBalance> select(@RequestParam Integer accountId) {
-        return subjectBalanceService.select(accountId);
+    public List<SubjectBalance> select(SubjectBalanceQuery subjectBalanceQuery) {
+        return subjectBalanceService.select(subjectBalanceQuery);
     }
 
 }
