@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * @author zhangquanli
  * @since 2022/1/5 10:05:00
  */
-@CrossOrigin
 @RequestMapping("/accountingEntries")
 @RestController
 public class AccountingEntryController {

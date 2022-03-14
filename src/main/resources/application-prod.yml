@@ -2,9 +2,12 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/accounting?useUnicode=true&charactereEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: "root"
-    password: "root"
+    password: "@Aliyun502624709"
   jpa:
-    show-sql: true
+    show-sql: false
     open-in-view: true
     hibernate:
       ddl-auto: update
+logging:
+  file:
+    path: ./logs

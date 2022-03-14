@@ -14,7 +14,6 @@ import java.util.List;
  * @author zhangquanli
  * @since 2021/12/22 10:32:00
  */
-@CrossOrigin
 @RequestMapping("/accounts")
 @RestController
 public class AccountController {

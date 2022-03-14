@@ -16,7 +16,6 @@ import java.util.List;
  * @author zhangquanli
  * @since 2021/12/20 13:02:00
  */
-@CrossOrigin
 @RequestMapping("/labels")
 @RestController
 public class LabelController {

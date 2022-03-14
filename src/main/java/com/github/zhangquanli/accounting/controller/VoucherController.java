@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  * @author zhangquanli
  * @since 2021/12/20 13:22:00
  */
-@CrossOrigin
 @RequestMapping("/vouchers")
 @RestController
 public class VoucherController {

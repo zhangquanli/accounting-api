@@ -13,7 +13,6 @@ import java.util.List;
  * @author zhangquanli
  * @since 2021/12/27 10:47:00
  */
-@CrossOrigin
 @RequestMapping("/subjectBalances")
 @RestController
 public class SubjectBalanceController {
