@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 public class AccountingEntryQuery extends PageQuery {
     private Integer accountId;
-    private List<Integer> subjectIds;
     private String summary;
+    private List<Integer> subjectIds;
     private List<Integer> labelIds;
 }

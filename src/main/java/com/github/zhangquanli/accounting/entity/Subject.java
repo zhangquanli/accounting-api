@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 
 /**
  * 会计科目
+ * <p>
+ * 会计科目最多只能有四级
  *
  * @author zhangquanli
  * @since 2021/12/20 10:01:00

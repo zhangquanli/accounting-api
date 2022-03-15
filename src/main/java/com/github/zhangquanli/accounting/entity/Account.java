@@ -1,6 +1,6 @@
 package com.github.zhangquanli.accounting.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +29,7 @@ public class Account extends BaseEntity {
     /**
      * 关联的会计余额集合
      */
-    @JsonIgnore
+    @JsonIgnoreProperties({"account"})
     @OneToMany(mappedBy = "account", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<SubjectBalance> subjectBalances;
 
