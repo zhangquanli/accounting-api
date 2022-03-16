@@ -38,36 +38,45 @@ public class AccountingEntryServiceImpl implements AccountingEntryService {
         int size = accountingEntryQuery.getSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
         Pageable pageable = PageRequest.of(page, size, sort);
-        Specification<AccountingEntry> specification = (root, query, criteriaBuilder) -> {
+        Specification<AccountingEntry> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
+            // 凭证日期
+            if (accountingEntryQuery.getStartVoucherDate() != null) {
+                Predicate predicate = cb.greaterThanOrEqualTo(root.join("voucher").get("accountDate"),
+                        accountingEntryQuery.getStartVoucherDate());
+                predicates.add(predicate);
+            }
+            if (accountingEntryQuery.getEndVoucherDate() != null) {
+                Predicate predicate = cb.lessThanOrEqualTo(root.join("voucher").get("accountDate"),
+                        accountingEntryQuery.getEndVoucherDate());
+                predicates.add(predicate);
+            }
             // 账簿
             if (accountingEntryQuery.getAccountId() != null) {
-                Predicate predicate = criteriaBuilder.equal(root.get("subjectBalance").get("account").get("id"),
+                Predicate predicate = cb.equal(root.join("subjectBalance").join("account").get("id"),
                         accountingEntryQuery.getAccountId());
                 predicates.add(predicate);
             }
-            // 科目集合
-            if (accountingEntryQuery.getSubjectIds() != null &&
-                    !accountingEntryQuery.getSubjectIds().isEmpty()) {
-                Predicate predicate = root.get("subjectBalance").get("subject").get("id")
-                        .in(accountingEntryQuery.getSubjectIds());
+            // 科目
+            if (accountingEntryQuery.getSubjectId() != null) {
+                Predicate predicate = cb.equal(root.join("subjectBalance").join("subject").get("id"),
+                        accountingEntryQuery.getSubjectId());
                 predicates.add(predicate);
             }
             // 摘要
             if (accountingEntryQuery.getSummary() != null &&
                     !accountingEntryQuery.getSummary().trim().equals("")) {
-                Predicate predicate = criteriaBuilder.like(root.get("summary"),
+                Predicate predicate = cb.like(root.get("summary"),
                         accountingEntryQuery.getSummary() + "%");
                 predicates.add(predicate);
             }
-            // 标签集合
-            if (accountingEntryQuery.getLabelIds() != null &&
-                    !accountingEntryQuery.getLabelIds().isEmpty()) {
-                Predicate predicate = root.get("labels").get("id")
-                        .in(accountingEntryQuery.getLabelIds());
+            // 标签
+            if (accountingEntryQuery.getLabelId() != null) {
+                Predicate predicate = cb.equal(root.join("labels").get("id"),
+                        accountingEntryQuery.getLabelId());
                 predicates.add(predicate);
             }
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+            return cb.and(predicates.toArray(new Predicate[0]));
         };
         return accountingEntryRepository.findAll(specification, pageable);
     }

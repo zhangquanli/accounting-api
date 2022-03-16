@@ -2,8 +2,9 @@ package com.github.zhangquanli.accounting.query;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.List;
+import java.time.LocalDate;
 
 /**
  * 描述
@@ -14,8 +15,13 @@ import java.util.List;
 @Getter
 @Setter
 public class AccountingEntryQuery extends PageQuery {
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startVoucherDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endVoucherDate;
+
     private Integer accountId;
+    private Integer subjectId;
+    private Integer labelId;
     private String summary;
-    private List<Integer> subjectIds;
-    private List<Integer> labelIds;
 }
