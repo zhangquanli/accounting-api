@@ -1,6 +1,7 @@
 package com.github.zhangquanli.accounting.controller;
 
 import com.github.zhangquanli.accounting.entity.Voucher;
+import com.github.zhangquanli.accounting.query.PageQuery;
 import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * 凭证管理
  *
  * @author zhangquanli
  * @since 2021/12/20 13:22:00
  */
+@CrossOrigin
 @RequestMapping("/vouchers")
 @RestController
 public class VoucherController {
@@ -26,8 +30,8 @@ public class VoucherController {
     }
 
     @GetMapping
-    public Page<Voucher> select(@Validated VoucherQuery voucherReq) {
-        return voucherService.select(voucherReq);
+    public Page<Voucher> select(VoucherQuery voucherQuery, @Valid PageQuery pageQuery) {
+        return voucherService.select(voucherQuery, pageQuery);
     }
 
     @PostMapping

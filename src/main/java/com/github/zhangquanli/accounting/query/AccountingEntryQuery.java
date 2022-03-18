@@ -14,7 +14,7 @@ import java.time.LocalDate;
  */
 @Getter
 @Setter
-public class AccountingEntryQuery extends PageQuery {
+public class AccountingEntryQuery  {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startVoucherDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -14,12 +14,12 @@ import java.time.LocalDate;
  */
 @Getter
 @Setter
-public class VoucherQuery extends PageQuery {
+public class VoucherQuery {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startAccountDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endAccountDate;
-    
+
     private Integer accountId;
     private String num;
 }

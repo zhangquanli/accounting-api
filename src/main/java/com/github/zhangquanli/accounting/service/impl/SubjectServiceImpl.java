@@ -6,6 +6,8 @@ import com.github.zhangquanli.accounting.repository.SubjectRepository;
 import com.github.zhangquanli.accounting.service.SubjectService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,11 +74,6 @@ public class SubjectServiceImpl implements SubjectService {
         Subject subject = subjectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         BeanUtils.copyProperties(newSubject, subject);
         subjectRepository.save(subject);
-    }
-
-    @Override
-    public void delete(Integer id) {
-        subjectRepository.deleteById(id);
     }
 
     @Override

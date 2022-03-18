@@ -18,7 +18,5 @@ public interface SubjectService {
 
     void update(Integer id, Subject subject);
 
-    void delete(Integer id);
-
     Subject selectOne(Integer id);
 }

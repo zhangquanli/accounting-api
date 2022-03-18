@@ -2,6 +2,7 @@ package com.github.zhangquanli.accounting.service.impl;
 
 import com.github.zhangquanli.accounting.entity.AccountingEntry;
 import com.github.zhangquanli.accounting.query.AccountingEntryQuery;
+import com.github.zhangquanli.accounting.query.PageQuery;
 import com.github.zhangquanli.accounting.repository.AccountingEntryRepository;
 import com.github.zhangquanli.accounting.service.AccountingEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,23 @@ public class AccountingEntryServiceImpl implements AccountingEntryService {
     }
 
     @Override
-    public Page<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery) {
-        int page = accountingEntryQuery.getPage() - 1;
-        int size = accountingEntryQuery.getSize();
+    public Page<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery, PageQuery pageQuery) {
+        int page = pageQuery.getPage() - 1;
+        int size = pageQuery.getSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
         Pageable pageable = PageRequest.of(page, size, sort);
-        Specification<AccountingEntry> specification = (root, query, cb) -> {
+        Specification<AccountingEntry> specification = toSpecification(accountingEntryQuery);
+        return accountingEntryRepository.findAll(specification, pageable);
+    }
+
+    @Override
+    public List<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery) {
+        Specification<AccountingEntry> specification = toSpecification(accountingEntryQuery);
+        return accountingEntryRepository.findAll(specification);
+    }
+
+    private Specification<AccountingEntry> toSpecification(AccountingEntryQuery accountingEntryQuery) {
+        return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             // 凭证日期
             if (accountingEntryQuery.getStartVoucherDate() != null) {
@@ -78,6 +90,6 @@ public class AccountingEntryServiceImpl implements AccountingEntryService {
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
-        return accountingEntryRepository.findAll(specification, pageable);
     }
+
 }

@@ -15,6 +15,7 @@ import java.util.List;
  * @author zhangquanli
  * @since 2021/12/20 11:14:00
  */
+@CrossOrigin
 @RequestMapping("/subjects")
 @RestController
 public class SubjectController {
@@ -39,11 +40,6 @@ public class SubjectController {
     @PutMapping("/{id}")
     public void update(@PathVariable Integer id, @Validated @RequestBody Subject subject) {
         subjectService.update(id, subject);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        subjectService.delete(id);
     }
 
     @GetMapping("/{id}")
