@@ -8,3 +8,7 @@ spring:
     open-in-view: true
     hibernate:
       ddl-auto: update
+logging:
+  level:
+    org.springframework.security: debug
+    com.github.zhangquanli.security: debug
