@@ -4,9 +4,7 @@ import com.github.zhangquanli.accounting.entity.Voucher;
 import com.github.zhangquanli.accounting.query.PageQuery;
 import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.service.VoucherService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,21 +18,19 @@ import javax.validation.Valid;
 @RequestMapping("/vouchers")
 @RestController
 public class VoucherController {
+    private final VoucherService voucherService;
 
-    private VoucherService voucherService;
-
-    @Autowired
-    public void setVoucherService(VoucherService voucherService) {
+    public VoucherController(VoucherService voucherService) {
         this.voucherService = voucherService;
     }
 
     @GetMapping
-    public Page<Voucher> select(VoucherQuery voucherQuery, @Valid PageQuery pageQuery) {
-        return voucherService.select(voucherQuery, pageQuery);
+    public Page<Voucher> selectPage(VoucherQuery voucherQuery, @Valid PageQuery pageQuery) {
+        return voucherService.selectPage(voucherQuery, pageQuery);
     }
 
     @PostMapping
-    public void insert(@Validated @RequestBody Voucher voucher) {
+    public void insert(@Valid @RequestBody Voucher voucher) {
         voucherService.insert(voucher);
     }
 
@@ -47,5 +43,4 @@ public class VoucherController {
     public Voucher selectOne(@PathVariable Integer id) {
         return voucherService.selectOne(id);
     }
-
 }

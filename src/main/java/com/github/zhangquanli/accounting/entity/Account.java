@@ -14,13 +14,12 @@ import java.util.List;
  * 会计账簿
  *
  * @author zhangquanli
- * @since 2021/12/22 9:42:00
+ * @since 2021/12/22
  */
 @Entity
 @Getter
 @Setter
 public class Account extends BaseEntity {
-
     /**
      * 名称
      */
@@ -32,5 +31,4 @@ public class Account extends BaseEntity {
     @JsonIgnoreProperties({"account"})
     @OneToMany(mappedBy = "account", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<SubjectBalance> subjectBalances;
-
 }

@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2022/1/5 10:12:00
  */
 public interface AccountingEntryService {
-    Page<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery, PageQuery pageQuery);
+    Page<AccountingEntry> selectPage(AccountingEntryQuery accountingEntryQuery, PageQuery pageQuery);
 
-    List<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery);
+    List<AccountingEntry> selectList(AccountingEntryQuery accountingEntryQuery);
 }

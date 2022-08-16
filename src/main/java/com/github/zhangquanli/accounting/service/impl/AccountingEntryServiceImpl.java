@@ -5,13 +5,13 @@ import com.github.zhangquanli.accounting.query.AccountingEntryQuery;
 import com.github.zhangquanli.accounting.query.PageQuery;
 import com.github.zhangquanli.accounting.repository.AccountingEntryRepository;
 import com.github.zhangquanli.accounting.service.AccountingEntryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
@@ -26,15 +26,15 @@ import java.util.List;
 @Service
 public class AccountingEntryServiceImpl implements AccountingEntryService {
 
-    private AccountingEntryRepository accountingEntryRepository;
+    private final AccountingEntryRepository accountingEntryRepository;
 
-    @Autowired
-    public void setAccountingEntryRepository(AccountingEntryRepository accountingEntryRepository) {
+    public AccountingEntryServiceImpl(AccountingEntryRepository accountingEntryRepository) {
+        Assert.notNull(accountingEntryRepository, "accountingEntryRepository cannot be null");
         this.accountingEntryRepository = accountingEntryRepository;
     }
 
     @Override
-    public Page<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery, PageQuery pageQuery) {
+    public Page<AccountingEntry> selectPage(AccountingEntryQuery accountingEntryQuery, PageQuery pageQuery) {
         int page = pageQuery.getPage() - 1;
         int size = pageQuery.getSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
@@ -44,7 +44,7 @@ public class AccountingEntryServiceImpl implements AccountingEntryService {
     }
 
     @Override
-    public List<AccountingEntry> select(AccountingEntryQuery accountingEntryQuery) {
+    public List<AccountingEntry> selectList(AccountingEntryQuery accountingEntryQuery) {
         Specification<AccountingEntry> specification = toSpecification(accountingEntryQuery);
         return accountingEntryRepository.findAll(specification);
     }
@@ -91,5 +91,4 @@ public class AccountingEntryServiceImpl implements AccountingEntryService {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
-
 }

@@ -6,8 +6,8 @@ import com.github.zhangquanli.accounting.query.SubjectBalanceQuery;
 import com.github.zhangquanli.accounting.repository.SubjectBalanceRepository;
 import com.github.zhangquanli.accounting.repository.SubjectRepository;
 import com.github.zhangquanli.accounting.service.SubjectBalanceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,24 +20,19 @@ import java.util.stream.Stream;
  * @author zhangquanli
  * @since 2021/12/27 10:51:00
  */
+@Transactional(rollbackFor = RuntimeException.class)
 @Service
 public class SubjectBalanceServiceImpl implements SubjectBalanceService {
+    private final SubjectRepository subjectRepository;
+    private final SubjectBalanceRepository subjectBalanceRepository;
 
-    private SubjectRepository subjectRepository;
-    private SubjectBalanceRepository subjectBalanceRepository;
-
-    @Autowired
-    public void setSubjectRepository(SubjectRepository subjectRepository) {
+    public SubjectBalanceServiceImpl(SubjectRepository subjectRepository, SubjectBalanceRepository subjectBalanceRepository) {
         this.subjectRepository = subjectRepository;
-    }
-
-    @Autowired
-    public void setSubjectBalanceRepository(SubjectBalanceRepository subjectBalanceRepository) {
         this.subjectBalanceRepository = subjectBalanceRepository;
     }
 
     @Override
-    public List<SubjectBalance> select(SubjectBalanceQuery subjectBalanceQuery) {
+    public List<SubjectBalance> selectList(SubjectBalanceQuery subjectBalanceQuery) {
         List<SubjectBalance> subjectBalances = subjectBalanceRepository.findByAccount_Id(subjectBalanceQuery.getAccountId());
         if (subjectBalanceQuery.getIsRecursion() != null && subjectBalanceQuery.getIsRecursion()) {
             // 提取科目ID集合
@@ -50,7 +45,6 @@ public class SubjectBalanceServiceImpl implements SubjectBalanceService {
         } else {
             return subjectBalances;
         }
-
     }
 
     private List<Integer> extractSubjectIds(List<SubjectBalance> subjectBalances) {
@@ -73,5 +67,4 @@ public class SubjectBalanceServiceImpl implements SubjectBalanceService {
                     return subjectBalance;
                 });
     }
-
 }

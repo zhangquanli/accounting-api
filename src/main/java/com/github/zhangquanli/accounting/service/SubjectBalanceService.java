@@ -12,5 +12,5 @@ import java.util.List;
  * @since 2021/12/27 10:50:00
  */
 public interface SubjectBalanceService {
-    List<SubjectBalance> select(SubjectBalanceQuery subjectBalanceQuery);
+    List<SubjectBalance> selectList(SubjectBalanceQuery subjectBalanceQuery);
 }

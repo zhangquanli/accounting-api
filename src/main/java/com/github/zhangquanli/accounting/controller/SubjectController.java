@@ -3,7 +3,6 @@ package com.github.zhangquanli.accounting.controller;
 import com.github.zhangquanli.accounting.entity.Subject;
 import com.github.zhangquanli.accounting.query.SubjectQuery;
 import com.github.zhangquanli.accounting.service.SubjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,32 +17,31 @@ import java.util.List;
 @RequestMapping("/subjects")
 @RestController
 public class SubjectController {
+    private final SubjectService subjectService;
 
-    private SubjectService subjectService;
-
-    @Autowired
-    public void setSubjectService(SubjectService subjectService) {
+    public SubjectController(SubjectService subjectService) {
         this.subjectService = subjectService;
     }
 
     @GetMapping
-    public List<Subject> select(SubjectQuery subjectQuery) {
-        return subjectService.select(subjectQuery);
+    public List<Subject> selectList(SubjectQuery subjectQuery) {
+        return subjectService.selectList(subjectQuery);
     }
 
     @PostMapping
     public void insert(@Validated @RequestBody Subject subject) {
+        subject.setId(null);
         subjectService.insert(subject);
     }
 
     @PutMapping("/{id}")
     public void update(@PathVariable Integer id, @Validated @RequestBody Subject subject) {
-        subjectService.update(id, subject);
+        subject.setId(id);
+        subjectService.update(subject);
     }
 
     @GetMapping("/{id}")
     public Subject selectOne(@PathVariable Integer id) {
         return subjectService.selectOne(id);
     }
-
 }

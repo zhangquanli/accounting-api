@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
  * @since 2021/12/21 16:41:00
  */
 public interface VoucherService {
-    Page<Voucher> select(VoucherQuery voucherQuery, PageQuery pageQuery);
+    Page<Voucher> selectPage(VoucherQuery voucherQuery, PageQuery pageQuery);
 
     void insert(Voucher voucher);
 

@@ -12,11 +12,11 @@ import java.util.List;
  * @since 2021/12/22 10:40:00
  */
 public interface AccountService {
-    List<Account> select(AccountQuery accountQuery);
+    List<Account> selectList(AccountQuery accountQuery);
 
     void insert(Account account);
 
-    void update(Integer id, Account account);
+    void update(Account account);
 
     void delete(Integer id);
 

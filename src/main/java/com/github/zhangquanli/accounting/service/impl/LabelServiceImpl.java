@@ -3,7 +3,6 @@ package com.github.zhangquanli.accounting.service.impl;
 import com.github.zhangquanli.accounting.entity.Label;
 import com.github.zhangquanli.accounting.repository.LabelRepository;
 import com.github.zhangquanli.accounting.service.LabelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,17 +15,14 @@ import java.util.List;
  */
 @Service
 public class LabelServiceImpl implements LabelService {
+    private final LabelRepository labelRepository;
 
-    private LabelRepository labelRepository;
-
-    @Autowired
-    public void setLabelRepository(LabelRepository labelRepository) {
+    public LabelServiceImpl(LabelRepository labelRepository) {
         this.labelRepository = labelRepository;
     }
 
     @Override
-    public List<Label> select() {
+    public List<Label> selectList() {
         return labelRepository.findAll();
     }
-
 }

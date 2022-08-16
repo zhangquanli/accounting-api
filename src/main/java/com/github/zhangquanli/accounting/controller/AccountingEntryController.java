@@ -15,18 +15,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.time.LocalDate;
@@ -40,33 +37,71 @@ import java.util.*;
  */
 @Slf4j
 @RequestMapping("/accountingEntries")
-@Controller
+@RestController
 public class AccountingEntryController {
+    private final SubjectService subjectService;
+    private final AccountingEntryService accountingEntryService;
 
-    private SubjectService subjectService;
-    private AccountingEntryService accountingEntryService;
-    private HttpServletResponse response;
-
-    @Autowired
-    public void setSubjectService(SubjectService subjectService) {
+    public AccountingEntryController(SubjectService subjectService, AccountingEntryService accountingEntryService) {
         this.subjectService = subjectService;
-    }
-
-    @Autowired
-    public void setAccountingEntryService(AccountingEntryService accountingEntryService) {
         this.accountingEntryService = accountingEntryService;
     }
 
-    @Autowired
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
+    @GetMapping
+    public Page<AccountingEntry> selectPage(AccountingEntryQuery accountingEntryQuery, @Valid PageQuery pageQuery) {
+        return accountingEntryService.selectPage(accountingEntryQuery, pageQuery);
     }
 
-    @ResponseBody
-    @GetMapping
-    public Page<AccountingEntry> select(
-            AccountingEntryQuery accountingEntryQuery, @Valid PageQuery pageQuery) {
-        return accountingEntryService.select(accountingEntryQuery, pageQuery);
+    @GetMapping("/export")
+    public void export(AccountingEntryQuery accountingEntryQuery, HttpServletResponse response) {
+        long time1 = System.currentTimeMillis();
+        List<AccountingEntry> accountingEntries = accountingEntryService.selectList(accountingEntryQuery);
+        Map<String, Object> header = excelHeader(accountingEntries);
+        List<Map<String, Object>> contents = excelContents(accountingEntries);
+        long time2 = System.currentTimeMillis();
+        log.info("导出会计分录数据=>查询数据，花费{}毫秒", (time2 - time1));
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet();
+            // 标题行
+            {
+                Row row = sheet.createRow(0);
+                int columnIndex = 0;
+                for (String key : header.keySet()) {
+                    Cell cell = row.createCell(columnIndex);
+                    cell.setCellValue((String) header.get(key));
+                    header.put(key, columnIndex);
+                    columnIndex++;
+                }
+            }
+            // 内容行
+            for (int i = 0; i < contents.size(); i++) {
+                Row row = sheet.createRow(i + 1);
+                Map<String, Object> content = contents.get(i);
+                for (String key : content.keySet()) {
+                    Integer columnIndex = (Integer) header.get(key);
+                    Cell cell = row.createCell(columnIndex);
+                    Object value = content.get(key);
+                    if (value instanceof String) {
+                        cell.setCellValue((String) value);
+                    } else if (value instanceof LocalDate) {
+                        cell.setCellValue((LocalDate) value);
+                    } else if (value instanceof BigDecimal) {
+                        cell.setCellValue(((BigDecimal) value).doubleValue());
+                    }
+                }
+            }
+            // 写入响应流
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            String filename = URLEncoder.encode("会计分录_" + System.currentTimeMillis() + ".xlsx", "UTF-8");
+            response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+            OutputStream outputStream = response.getOutputStream();
+            workbook.write(outputStream);
+            outputStream.flush();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        long time3 = System.currentTimeMillis();
+        log.info("导出会计分录数据=>生成excel，花费{}毫秒", (time3 - time2));
     }
 
     private Map<String, Object> excelHeader(List<AccountingEntry> accountingEntries) {
@@ -91,7 +126,7 @@ public class AccountingEntryController {
 
     private List<Map<String, Object>> excelContents(List<AccountingEntry> accountingEntries) {
         List<Map<String, Object>> contents = new ArrayList<>();
-        List<Subject> subjects = subjectService.select(new SubjectQuery());
+        List<Subject> subjects = subjectService.selectList(new SubjectQuery());
         for (AccountingEntry accountingEntry : accountingEntries) {
             Map<String, Object> content = new HashMap<>();
             content.put("voucherDate", accountingEntry.getVoucher().getAccountDate());
@@ -115,63 +150,6 @@ public class AccountingEntryController {
             contents.add(content);
         }
         return contents;
-    }
-
-    @GetMapping("/export")
-    public void export(AccountingEntryQuery accountingEntryQuery) {
-        long time1 = System.currentTimeMillis();
-        List<AccountingEntry> accountingEntries = accountingEntryService.select(accountingEntryQuery);
-        Map<String, Object> header = excelHeader(accountingEntries);
-        List<Map<String, Object>> contents = excelContents(accountingEntries);
-        long time2 = System.currentTimeMillis();
-        log.info("导出会计分录数据=>查询数据，花费{}毫秒", (time2 - time1));
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet();
-        // 标题行
-        {
-            Row row = sheet.createRow(0);
-            int columnIndex = 0;
-            for (String key : header.keySet()) {
-                Cell cell = row.createCell(columnIndex);
-                cell.setCellValue((String) header.get(key));
-                header.put(key, columnIndex);
-                columnIndex++;
-            }
-        }
-        // 内容行
-        for (int i = 0; i < contents.size(); i++) {
-            Row row = sheet.createRow(i + 1);
-            Map<String, Object> content = contents.get(i);
-            for (String key : content.keySet()) {
-                Integer columnIndex = (Integer) header.get(key);
-                Cell cell = row.createCell(columnIndex);
-                Object value = content.get(key);
-                if (value instanceof String) {
-                    cell.setCellValue((String) value);
-                } else if (value instanceof LocalDate) {
-                    cell.setCellValue((LocalDate) value);
-                } else if (value instanceof BigDecimal) {
-                    cell.setCellValue(((BigDecimal) value).doubleValue());
-                }
-            }
-        }
-        // 写入响应流
-
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        try {
-            String filename = URLEncoder.encode("会计分录_" + System.currentTimeMillis() + ".xlsx", "UTF-8");
-            response.setHeader("Content-Disposition", "attachment; filename=" + filename);
-        } catch (UnsupportedEncodingException e) {
-            response.setHeader("Content-Disposition", "attachment; filename=" + System.currentTimeMillis() + ".xlsx");
-        }
-        try (OutputStream outputStream = response.getOutputStream()) {
-            workbook.write(outputStream);
-            outputStream.flush();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
-        long time3 = System.currentTimeMillis();
-        log.info("导出会计分录数据=>生成excel，花费{}毫秒", (time3 - time2));
     }
 
     private String getSubjectName(List<Subject> subjects, String num, int level) {

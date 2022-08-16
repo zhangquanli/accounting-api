@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class SubjectBalance extends BaseEntity {
-
     /**
      * 初始金额
      */
@@ -46,5 +45,4 @@ public class SubjectBalance extends BaseEntity {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Account account;
-
 }

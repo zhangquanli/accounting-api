@@ -2,7 +2,7 @@ package com.github.zhangquanli.accounting.controller;
 
 import com.github.zhangquanli.accounting.entity.Label;
 import com.github.zhangquanli.accounting.service.LabelService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,17 +18,15 @@ import java.util.List;
 @RequestMapping("/labels")
 @RestController
 public class LabelController {
+    private final LabelService labelService;
 
-    private LabelService labelService;
-
-    @Autowired
-    public void setLabelService(LabelService labelService) {
+    public LabelController(LabelService labelService) {
         this.labelService = labelService;
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_role1')")
     @GetMapping
-    public List<Label> select() {
-        return labelService.select();
+    public List<Label> selectList() {
+        return labelService.selectList();
     }
-
 }

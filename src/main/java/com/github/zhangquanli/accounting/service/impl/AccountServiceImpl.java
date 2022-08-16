@@ -5,12 +5,10 @@ import com.github.zhangquanli.accounting.entity.SubjectBalance;
 import com.github.zhangquanli.accounting.query.AccountQuery;
 import com.github.zhangquanli.accounting.repository.AccountRepository;
 import com.github.zhangquanli.accounting.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
@@ -25,24 +23,22 @@ import java.util.stream.Collectors;
  */
 @Service
 public class AccountServiceImpl implements AccountService {
+    private final AccountRepository accountRepository;
 
-    private AccountRepository accountRepository;
-
-    @Autowired
-    public void setAccountRepository(AccountRepository accountRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
     @Override
-    public List<Account> select(AccountQuery accountQuery) {
-        Specification<Account> specification = (root, query, criteriaBuilder) -> {
+    public List<Account> selectList(AccountQuery accountQuery) {
+        Specification<Account> specification = (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (accountQuery.getName() != null) {
-                Predicate predicate = criteriaBuilder.like(root.get("name"),
+                Predicate predicate = builder.like(root.get("name"),
                         "%" + accountQuery.getName() + "%");
                 predicates.add(predicate);
             }
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+            return builder.and(predicates.toArray(new Predicate[0]));
         };
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         return accountRepository.findAll(specification, sort);
@@ -50,7 +46,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void insert(Account account) {
-        account.setId(null);
         if (account.getSubjectBalances() != null) {
             for (SubjectBalance subjectBalance : account.getSubjectBalances()) {
                 subjectBalance.setAccount(account);
@@ -60,8 +55,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void update(Integer id, Account newAccount) {
-        Account account = accountRepository.findById(id).orElseThrow(EntityExistsException::new);
+    public void update(Account newAccount) {
+        Account account = accountRepository.findById(newAccount.getId()).orElseThrow(EntityNotFoundException::new);
         // 修改会计科目数据
         List<SubjectBalance> subjectBalances = account.getSubjectBalances();
         List<Integer> subjectIds = subjectBalances.stream()

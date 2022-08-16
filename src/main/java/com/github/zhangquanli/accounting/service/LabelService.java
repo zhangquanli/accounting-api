@@ -11,5 +11,5 @@ import java.util.List;
  * @since 2021/12/20 13:08:00
  */
 public interface LabelService {
-    List<Label> select();
+    List<Label> selectList();
 }

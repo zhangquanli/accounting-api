@@ -3,7 +3,6 @@ package com.github.zhangquanli.accounting.controller;
 import com.github.zhangquanli.accounting.entity.Account;
 import com.github.zhangquanli.accounting.query.AccountQuery;
 import com.github.zhangquanli.accounting.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,27 +16,27 @@ import java.util.List;
 @RequestMapping("/accounts")
 @RestController
 public class AccountController {
+    private final AccountService accountService;
 
-    private AccountService accountService;
-
-    @Autowired
-    public void setAccountService(AccountService accountService) {
+    public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
     @GetMapping
-    public List<Account> select(AccountQuery accountQuery) {
-        return accountService.select(accountQuery);
+    public List<Account> selectList(AccountQuery accountQuery) {
+        return accountService.selectList(accountQuery);
     }
 
     @PostMapping
     public void insert(@RequestBody Account account) {
+        account.setId(null);
         accountService.insert(account);
     }
 
     @PutMapping("/{id}")
     public void update(@PathVariable Integer id, @RequestBody Account account) {
-        accountService.update(id, account);
+        account.setId(id);
+        accountService.update(account);
     }
 
     @DeleteMapping("/{id}")
@@ -49,5 +48,4 @@ public class AccountController {
     public Account selectOne(@PathVariable Integer id) {
         return accountService.selectOne(id);
     }
-
 }

@@ -21,7 +21,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class Subject extends BaseEntity {
-
     /**
      * 代码
      */
@@ -48,18 +47,17 @@ public class Subject extends BaseEntity {
     /**
      * 编号
      * <p>
-     * 自关联字段，0表示根目录，使用主键字段，并用-隔开
+     * 自关联字段，'0'表示根目录，使用主键字段，并用'-'隔开
      * 例：0-1-3
      */
     private String num;
     /**
      * 父级编码
      * <p>
-     * 自关联字段，0表示根目录，使用主键字段，并用-隔开
-     * 例：0-1-3
+     * 自关联字段，'0'表示根目录，使用主键字段，并用'-'隔开
+     * 例：0-1
      */
     @NotNull
     @Column(nullable = false)
     private String parentNum;
-
 }

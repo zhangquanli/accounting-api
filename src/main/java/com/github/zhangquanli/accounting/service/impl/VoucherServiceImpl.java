@@ -8,7 +8,6 @@ import com.github.zhangquanli.accounting.repository.SubjectBalanceRepository;
 import com.github.zhangquanli.accounting.repository.VoucherRepository;
 import com.github.zhangquanli.accounting.service.VoucherService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,30 +30,21 @@ import java.util.stream.Collectors;
  * @author zhangquanli
  * @since 2021/12/21 16:41:00
  */
+@Transactional(rollbackFor = RuntimeException.class)
 @Service
 public class VoucherServiceImpl implements VoucherService {
+    private final LabelRepository labelRepository;
+    private final VoucherRepository voucherRepository;
+    private final SubjectBalanceRepository subjectBalanceRepository;
 
-    private LabelRepository labelRepository;
-    private VoucherRepository voucherRepository;
-    private SubjectBalanceRepository subjectBalanceRepository;
-
-    @Autowired
-    public void setLabelRepository(LabelRepository labelRepository) {
+    public VoucherServiceImpl(LabelRepository labelRepository, VoucherRepository voucherRepository, SubjectBalanceRepository subjectBalanceRepository) {
         this.labelRepository = labelRepository;
-    }
-
-    @Autowired
-    public void setVoucherRepository(VoucherRepository voucherRepository) {
         this.voucherRepository = voucherRepository;
-    }
-
-    @Autowired
-    public void setSubjectBalanceRepository(SubjectBalanceRepository subjectBalanceRepository) {
         this.subjectBalanceRepository = subjectBalanceRepository;
     }
 
     @Override
-    public Page<Voucher> select(VoucherQuery voucherQuery, PageQuery pageQuery) {
+    public Page<Voucher> selectPage(VoucherQuery voucherQuery, PageQuery pageQuery) {
         int page = pageQuery.getPage() - 1;
         int size = pageQuery.getSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
@@ -90,7 +80,6 @@ public class VoucherServiceImpl implements VoucherService {
         return voucherRepository.findAll(specification, pageable);
     }
 
-    @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public void insert(Voucher voucher) {
         Integer accountId = voucher.getAccount().getId();
@@ -135,7 +124,6 @@ public class VoucherServiceImpl implements VoucherService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public void delete(Integer id) {
         Voucher originalVoucher = voucherRepository.findById(id).orElseThrow(EntityNotFoundException::new);

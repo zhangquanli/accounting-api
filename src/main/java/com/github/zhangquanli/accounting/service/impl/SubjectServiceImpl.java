@@ -5,9 +5,6 @@ import com.github.zhangquanli.accounting.query.SubjectQuery;
 import com.github.zhangquanli.accounting.repository.SubjectRepository;
 import com.github.zhangquanli.accounting.service.SubjectService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,16 +23,14 @@ import java.util.List;
 @Transactional(rollbackFor = RuntimeException.class)
 @Service
 public class SubjectServiceImpl implements SubjectService {
+    private final SubjectRepository subjectRepository;
 
-    private SubjectRepository subjectRepository;
-
-    @Autowired
-    public void setSubjectRepository(SubjectRepository subjectRepository) {
+    public SubjectServiceImpl(SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
     }
 
     @Override
-    public List<Subject> select(SubjectQuery subjectQuery) {
+    public List<Subject> selectList(SubjectQuery subjectQuery) {
         Specification<Subject> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             // 代码
@@ -62,7 +57,6 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void insert(Subject subject) {
-        subject.setId(null);
         subjectRepository.save(subject);
         String num = subject.getParentNum() + "-" + subject.getId();
         subject.setNum(num);
@@ -70,8 +64,8 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void update(Integer id, Subject newSubject) {
-        Subject subject = subjectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public void update(Subject newSubject) {
+        Subject subject = subjectRepository.findById(newSubject.getId()).orElseThrow(EntityNotFoundException::new);
         BeanUtils.copyProperties(newSubject, subject);
         subjectRepository.save(subject);
     }
@@ -80,5 +74,4 @@ public class SubjectServiceImpl implements SubjectService {
     public Subject selectOne(Integer id) {
         return subjectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
-
 }

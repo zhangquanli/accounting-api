@@ -12,11 +12,11 @@ import java.util.List;
  * @since 2021/12/20 11:18:00
  */
 public interface SubjectService {
-    List<Subject> select(SubjectQuery subjectQuery);
+    List<Subject> selectList(SubjectQuery subjectQuery);
 
     void insert(Subject subject);
 
-    void update(Integer id, Subject subject);
+    void update(Subject subject);
 
     Subject selectOne(Integer id);
 }
