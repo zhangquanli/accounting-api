@@ -1,6 +1,6 @@
 package com.github.zhangquanli.accounting.config;
 
-import com.github.zhangquanli.accounting.entity.User;
+import com.github.zhangquanli.accounting.entity.base.User;
 import com.github.zhangquanli.accounting.repository.UserRepository;
 import com.github.zhangquanli.security.configurers.BearerTokenConfigurer;
 import com.github.zhangquanli.security.configurers.OAuth2AuthorizationServerConfigurer;

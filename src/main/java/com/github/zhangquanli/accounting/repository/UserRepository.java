@@ -1,6 +1,6 @@
 package com.github.zhangquanli.accounting.repository;
 
-import com.github.zhangquanli.accounting.entity.User;
+import com.github.zhangquanli.accounting.entity.base.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
