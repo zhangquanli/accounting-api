@@ -4,24 +4,27 @@ import com.github.zhangquanli.accounting.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
- * 数据字段
+ * 接口
  *
  * @author zhangquanli
- * @since 2023/2/24
+ * @since 2023/2/27
  */
 @Entity
 @Getter
 @Setter
-public class DataColumn extends BaseEntity {
+public class Api extends BaseEntity {
     /**
-     * 字段名称
+     * 接口名称
      */
+    @Column(nullable = false)
     private String name;
     /**
-     * 字段类型
+     * 接口地址
      */
-    private String type;
+    @Column(nullable = false)
+    private String url;
 }

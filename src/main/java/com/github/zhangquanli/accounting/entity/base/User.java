@@ -9,11 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * 用户
@@ -36,18 +33,6 @@ public class User extends BaseEntity implements UserDetails {
      * 密码
      */
     private String password;
-
-    /**
-     * 关联的【角色】集合
-     */
-    @ManyToMany
-    private Set<Role> roles;
-
-    /**
-     * 关联的【用户数据字段】集合
-     */
-    @OneToMany(mappedBy = "user")
-    private Set<UserDataColumn> userDataColumns;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
