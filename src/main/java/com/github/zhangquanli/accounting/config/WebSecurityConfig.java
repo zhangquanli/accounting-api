@@ -29,7 +29,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
  * @since 2022/3/22 11:26:00
  */
 @EnableMethodSecurity
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override

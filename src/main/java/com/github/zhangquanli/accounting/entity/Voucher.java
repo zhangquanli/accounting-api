@@ -47,14 +47,14 @@ public class Voucher extends BaseEntity {
      */
     @NotEmpty
     @JsonIgnoreProperties({"voucher"})
-    @OneToMany(mappedBy = "voucher", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "voucher", cascade = CascadeType.PERSIST)
     private List<AccountingEntry> accountingEntries;
 
     /**
      * 所属账簿
      */
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Account account;
 
     /**
@@ -63,7 +63,7 @@ public class Voucher extends BaseEntity {
      * 当前凭证为冲红凭证，关联凭证为原始凭证
      */
     @JsonIgnoreProperties({"originalVoucher", "invalidVoucher"})
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Voucher originalVoucher;
 
     /**
@@ -72,6 +72,6 @@ public class Voucher extends BaseEntity {
      * 当前凭证为原始凭证，关联凭证为冲红凭证
      */
     @JsonIgnoreProperties({"originalVoucher", "invalidVoucher"})
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Voucher invalidVoucher;
 }

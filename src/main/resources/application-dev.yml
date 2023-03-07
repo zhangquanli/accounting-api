@@ -4,10 +4,11 @@ spring:
     username: "root"
     password: "root"
   jpa:
-    show-sql: false
+    show-sql: true
     open-in-view: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 logging:
-  file:
-    path: ./logs
+  level:
+    org.springframework.security: debug
+    com.github.zhangquanli.security: debug

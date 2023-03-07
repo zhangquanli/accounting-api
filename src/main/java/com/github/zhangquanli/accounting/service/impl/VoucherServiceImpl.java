@@ -1,7 +1,7 @@
 package com.github.zhangquanli.accounting.service.impl;
 
 import com.github.zhangquanli.accounting.entity.*;
-import com.github.zhangquanli.accounting.query.PageQuery;
+import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.repository.LabelRepository;
 import com.github.zhangquanli.accounting.repository.SubjectBalanceRepository;
@@ -44,9 +44,9 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public Page<Voucher> selectPage(VoucherQuery voucherQuery, PageQuery pageQuery) {
-        int page = pageQuery.getPage() - 1;
-        int size = pageQuery.getSize();
+    public Page<Voucher> selectPage(VoucherQuery voucherQuery, PageableQuery pageableQuery) {
+        int page = pageableQuery.getCurrent() - 1;
+        int size = pageableQuery.getPageSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
         Pageable pageable = PageRequest.of(page, size, sort);
         Specification<Voucher> specification = (root, query, criteriaBuilder) -> {

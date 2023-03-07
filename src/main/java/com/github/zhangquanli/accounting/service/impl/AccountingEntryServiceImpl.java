@@ -2,7 +2,7 @@ package com.github.zhangquanli.accounting.service.impl;
 
 import com.github.zhangquanli.accounting.entity.AccountingEntry;
 import com.github.zhangquanli.accounting.query.AccountingEntryQuery;
-import com.github.zhangquanli.accounting.query.PageQuery;
+import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.repository.AccountingEntryRepository;
 import com.github.zhangquanli.accounting.service.AccountingEntryService;
 import org.springframework.data.domain.Page;
@@ -34,9 +34,9 @@ public class AccountingEntryServiceImpl implements AccountingEntryService {
     }
 
     @Override
-    public Page<AccountingEntry> selectPage(AccountingEntryQuery accountingEntryQuery, PageQuery pageQuery) {
-        int page = pageQuery.getPage() - 1;
-        int size = pageQuery.getSize();
+    public Page<AccountingEntry> selectPage(AccountingEntryQuery accountingEntryQuery, PageableQuery pageableQuery) {
+        int page = pageableQuery.getCurrent() - 1;
+        int size = pageableQuery.getPageSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
         Pageable pageable = PageRequest.of(page, size, sort);
         Specification<AccountingEntry> specification = toSpecification(accountingEntryQuery);

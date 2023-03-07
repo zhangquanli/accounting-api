@@ -5,7 +5,7 @@ import com.github.zhangquanli.accounting.entity.Label;
 import com.github.zhangquanli.accounting.entity.Subject;
 import com.github.zhangquanli.accounting.entity.Type;
 import com.github.zhangquanli.accounting.query.AccountingEntryQuery;
-import com.github.zhangquanli.accounting.query.PageQuery;
+import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.SubjectQuery;
 import com.github.zhangquanli.accounting.service.AccountingEntryService;
 import com.github.zhangquanli.accounting.service.SubjectService;
@@ -48,8 +48,8 @@ public class AccountingEntryController {
     }
 
     @GetMapping
-    public Page<AccountingEntry> selectPage(AccountingEntryQuery accountingEntryQuery, @Valid PageQuery pageQuery) {
-        return accountingEntryService.selectPage(accountingEntryQuery, pageQuery);
+    public Page<AccountingEntry> selectPage(AccountingEntryQuery accountingEntryQuery, @Valid PageableQuery pageableQuery) {
+        return accountingEntryService.selectPage(accountingEntryQuery, pageableQuery);
     }
 
     @GetMapping("/export")

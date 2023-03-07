@@ -1,18 +1,18 @@
 package com.github.zhangquanli.accounting.entity.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpMethod;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * 接口
+ * 数据字段
  *
  * @author zhangquanli
  * @since 2023/2/27
@@ -20,24 +20,22 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-public class Api extends BaseEntity {
+public class DataColumn extends BaseEntity {
     /**
-     * 接口名称
+     * 字段名称，如：分公司名称
      */
     @NotNull
     @Column(nullable = false)
     private String name;
     /**
-     * 接口地址
+     * 字段代码，如：areaName
      */
     @NotNull
     @Column(nullable = false)
-    private String url;
-    /**
-     * HTTP方法
-     */
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private HttpMethod httpMethod;
+    private String code;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Component component;
 }

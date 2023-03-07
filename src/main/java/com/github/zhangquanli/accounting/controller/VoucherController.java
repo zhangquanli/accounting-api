@@ -1,7 +1,7 @@
 package com.github.zhangquanli.accounting.controller;
 
 import com.github.zhangquanli.accounting.entity.Voucher;
-import com.github.zhangquanli.accounting.query.PageQuery;
+import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.service.VoucherService;
 import org.springframework.data.domain.Page;
@@ -25,8 +25,8 @@ public class VoucherController {
     }
 
     @GetMapping
-    public Page<Voucher> selectPage(VoucherQuery voucherQuery, @Valid PageQuery pageQuery) {
-        return voucherService.selectPage(voucherQuery, pageQuery);
+    public Page<Voucher> selectPage(VoucherQuery voucherQuery, @Valid PageableQuery pageableQuery) {
+        return voucherService.selectPage(voucherQuery, pageableQuery);
     }
 
     @PostMapping

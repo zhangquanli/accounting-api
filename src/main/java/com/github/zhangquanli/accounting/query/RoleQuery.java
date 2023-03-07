@@ -5,6 +5,5 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PageQuery {
-    private String code;
+public class RoleQuery {
 }
