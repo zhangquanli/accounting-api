@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * 角色
@@ -28,26 +28,26 @@ public class Role extends BaseEntity {
      * 关联的【页面】集合
      */
     @ManyToMany
-    @JoinTable(name = "role_rel_page",
+    @JoinTable(name = "role_rel_page_info",
             joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "page_id")})
-    private Set<Page> pages;
+            inverseJoinColumns = {@JoinColumn(name = "page_info_id")})
+    private List<PageInfo> pageInfos;
     /**
      * 关联的【组件】集合
      */
     @ManyToMany
-    @JoinTable(name = "role_rel_component",
+    @JoinTable(name = "role_rel_component_info",
             joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "component_id")})
-    private Set<Component> components;
+            inverseJoinColumns = {@JoinColumn(name = "component_info_id")})
+    private List<ComponentInfo> componentInfos;
     /**
-     * 关联的【数据字段】集合
+     * 关联的【展示字段】集合
      */
     @ManyToMany
-    @JoinTable(name = "role_rel_data_column",
+    @JoinTable(name = "role_rel_display_column",
             joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "data_column_id")})
-    private Set<DataColumn> columns;
+            inverseJoinColumns = {@JoinColumn(name = "display_column_id")})
+    private List<DisplayColumn> displayColumns;
     /**
      * 关联的【权限字段】集合
      */
@@ -55,7 +55,7 @@ public class Role extends BaseEntity {
     @JoinTable(name = "role_rel_permission_column",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_column_id")})
-    private Set<PermissionColumn> permissionColumns;
+    private List<PermissionColumn> permissionColumns;
 
 
     /**
@@ -67,5 +67,5 @@ public class Role extends BaseEntity {
      * 子级角色集合
      */
     @OneToMany(mappedBy = "parent")
-    private Set<Role> children;
+    private List<Role> children;
 }

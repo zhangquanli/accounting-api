@@ -45,8 +45,8 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public Page<Voucher> selectPage(VoucherQuery voucherQuery, PageableQuery pageableQuery) {
-        int page = pageableQuery.getCurrent() - 1;
-        int size = pageableQuery.getPageSize();
+        int page = pageableQuery.getPage() - 1;
+        int size = pageableQuery.getSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
         Pageable pageable = PageRequest.of(page, size, sort);
         Specification<Voucher> specification = (root, query, criteriaBuilder) -> {

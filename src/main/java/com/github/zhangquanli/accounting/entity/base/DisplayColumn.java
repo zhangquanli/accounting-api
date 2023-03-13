@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * 数据字段
+ * 展示字段
  *
  * @author zhangquanli
  * @since 2023/2/27
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-public class DataColumn extends BaseEntity {
+public class DisplayColumn extends BaseEntity {
     /**
      * 字段名称，如：分公司名称
      */
@@ -33,9 +33,15 @@ public class DataColumn extends BaseEntity {
     @NotNull
     @Column(nullable = false)
     private String code;
+    /**
+     * 组件编码
+     */
+    @NotNull
+    @Column(nullable = false, unique = true)
+    private String num;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Component component;
+    private ComponentInfo componentInfo;
 }

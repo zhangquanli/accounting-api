@@ -1,4 +1,4 @@
-package com.github.zhangquanli.accounting.entity.base;
+package com.github.zhangquanli.accounting.entity.area;
 
 import com.github.zhangquanli.accounting.entity.BaseEntity;
 import lombok.Getter;
@@ -6,11 +6,11 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 /**
- * 乡、镇
+ * 省、直辖市、自治区
  *
  * @author zhangquanli
  * @since 2023/3/2
@@ -18,14 +18,13 @@ import javax.persistence.ManyToOne;
 @Entity
 @Getter
 @Setter
-public class Town extends BaseEntity {
+public class Province extends BaseEntity {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String code;
 
 
-    @ManyToOne
-    @JoinColumn(name = "district_code", referencedColumnName = "code")
-    private District district;
+    @OneToMany(mappedBy = "province")
+    private Set<City> cities;
 }

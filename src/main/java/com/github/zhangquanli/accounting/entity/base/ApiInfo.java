@@ -12,7 +12,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
 /**
- * 接口
+ * 接口信息
  *
  * @author zhangquanli
  * @since 2023/2/27
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-public class Api extends BaseEntity {
+public class ApiInfo extends BaseEntity {
     /**
      * 接口名称
      */

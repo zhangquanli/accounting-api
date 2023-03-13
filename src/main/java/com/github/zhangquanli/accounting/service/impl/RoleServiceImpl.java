@@ -6,7 +6,6 @@ import com.github.zhangquanli.accounting.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,9 +32,9 @@ public class RoleServiceImpl implements RoleService {
 //        roleRepository.save(role);
 
         //
-        role.setPages(newRole.getPages());
-        role.setComponents(newRole.getComponents());
-        role.setColumns(newRole.getColumns());
+        role.setPageInfos(newRole.getPageInfos());
+        role.setComponentInfos(newRole.getComponentInfos());
+        role.setDisplayColumns(newRole.getDisplayColumns());
         roleRepository.save(role);
     }
 }

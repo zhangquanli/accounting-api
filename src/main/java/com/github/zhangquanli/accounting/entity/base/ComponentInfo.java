@@ -9,13 +9,10 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
+import java.util.List;
 
 /**
- * 组件
+ * 组件信息
  *
  * @author zhangquanli
  * @since 2023/2/24
@@ -23,7 +20,7 @@ import static javax.persistence.CascadeType.PERSIST;
 @Entity
 @Getter
 @Setter
-public class Component extends BaseEntity {
+public class ComponentInfo extends BaseEntity {
     /**
      * 组件名称
      */
@@ -34,28 +31,33 @@ public class Component extends BaseEntity {
      * 组件代码
      */
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String code;
+    /**
+     * 组件编码
+     */
+    @NotNull
+    @Column(nullable = false, unique = true)
+    private String num;
 
     /**
      * 关联的【接口】集合
      */
-    @Valid
     @ManyToMany
-    @JoinTable(name = "component_rel_api",
-            joinColumns = @JoinColumn(name = "component_id"),
-            inverseJoinColumns = @JoinColumn(name = "api_id"))
-    private Set<Api> apis = Collections.emptySet();
+    @JoinTable(name = "component_info_rel_api_info",
+            joinColumns = @JoinColumn(name = "component_info_id"),
+            inverseJoinColumns = @JoinColumn(name = "api_info_id"))
+    private List<ApiInfo> apiInfos = Collections.emptyList();
     /**
-     * 关联的【数据字段】集合
+     * 关联的【展示字段】集合
      */
     @Valid
-    @OneToMany(mappedBy = "component", cascade = {PERSIST, MERGE})
-    private Set<DataColumn> dataColumns = Collections.emptySet();
+    @OneToMany(mappedBy = "componentInfo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<DisplayColumn> displayColumns = Collections.emptyList();
     /**
      * 关联的【页面】
      */
     @JsonIgnore
     @ManyToOne
-    private Page page;
+    private PageInfo pageInfo;
 }

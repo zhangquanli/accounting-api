@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class PageableQuery {
     @NotNull
-    private Integer current;
+    private Integer page;
     @NotNull
-    private Integer pageSize;
+    private Integer size;
 }

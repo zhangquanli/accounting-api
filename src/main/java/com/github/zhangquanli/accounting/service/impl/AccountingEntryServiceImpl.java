@@ -35,8 +35,8 @@ public class AccountingEntryServiceImpl implements AccountingEntryService {
 
     @Override
     public Page<AccountingEntry> selectPage(AccountingEntryQuery accountingEntryQuery, PageableQuery pageableQuery) {
-        int page = pageableQuery.getCurrent() - 1;
-        int size = pageableQuery.getPageSize();
+        int page = pageableQuery.getPage() - 1;
+        int size = pageableQuery.getSize();
         Sort sort = Sort.by(Sort.Order.desc("createTime"));
         Pageable pageable = PageRequest.of(page, size, sort);
         Specification<AccountingEntry> specification = toSpecification(accountingEntryQuery);

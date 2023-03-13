@@ -1,6 +1,8 @@
-package com.github.zhangquanli.accounting.entity.base;
+package com.github.zhangquanli.accounting.entity.area;
 
 import com.github.zhangquanli.accounting.entity.BaseEntity;
+import com.github.zhangquanli.accounting.entity.area.City;
+import com.github.zhangquanli.accounting.entity.area.Town;
 import lombok.Getter;
 import lombok.Setter;
 

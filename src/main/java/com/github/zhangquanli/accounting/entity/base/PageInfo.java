@@ -1,6 +1,6 @@
 package com.github.zhangquanli.accounting.entity.base;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +10,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
+import java.util.List;
 
 /**
- * 页面
+ * 页面信息
  *
  * @author zhangquanli
  * @since 2023/2/24
@@ -24,7 +21,7 @@ import static javax.persistence.CascadeType.PERSIST;
 @Entity
 @Getter
 @Setter
-public class Page extends BaseEntity implements Serializable {
+public class PageInfo extends BaseEntity implements Serializable {
     /**
      * 页面名称
      */
@@ -35,7 +32,7 @@ public class Page extends BaseEntity implements Serializable {
      * 页面代码
      */
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String code;
     /**
      * 页面类型
@@ -56,28 +53,27 @@ public class Page extends BaseEntity implements Serializable {
      * 关联的【接口】集合
      */
     @ManyToMany
-    @JoinTable(name = "page_rel_api",
-            joinColumns = @JoinColumn(name = "page_id"),
-            inverseJoinColumns = @JoinColumn(name = "api_id"))
-    private Set<Api> apis = Collections.emptySet();
+    @JoinTable(name = "page_info_rel_api_info",
+            joinColumns = @JoinColumn(name = "page_info_id"),
+            inverseJoinColumns = @JoinColumn(name = "api_info_id"))
+    private List<ApiInfo> apiInfos = Collections.emptyList();
     /**
      * 关联的【组件】集合
      */
     @Valid
-    @OneToMany(mappedBy = "page", cascade = {PERSIST, MERGE}, orphanRemoval = true)
-    private Set<Component> components = Collections.emptySet();
+    @OneToMany(mappedBy = "pageInfo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<ComponentInfo> componentInfos = Collections.emptyList();
     /**
      * 关联的父级【页面】
      */
-    @JsonIgnore
+    @JsonIgnoreProperties({"parent", "children"})
     @ManyToOne
-    @JoinColumn(name = "parent_code", referencedColumnName = "code")
-    private Page parent;
+    private PageInfo parent;
     /**
      * 关联的子级【页面】集合
      */
     @OneToMany(mappedBy = "parent")
-    private Set<Page> children = Collections.emptySet();
+    private List<PageInfo> children = Collections.emptyList();
 
     public enum Type {
         /**
