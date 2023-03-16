@@ -64,6 +64,16 @@ public class PageInfo extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "pageInfo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<ComponentInfo> componentInfos = Collections.emptyList();
     /**
+     * 关联的【权限字段】集合
+     */
+    @ManyToMany
+    @JoinTable(name = "page_info_rel_permission_column",
+            joinColumns = @JoinColumn(name = "page_info_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_colmun_id"))
+    private List<PermissionColumn> permissionColumns;
+
+
+    /**
      * 关联的父级【页面】
      */
     @JsonIgnoreProperties({"parent", "children"})

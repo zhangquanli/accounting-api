@@ -7,5 +7,7 @@ import java.util.List;
 public interface RoleService {
     List<Role> selectList();
 
+    void insert(Role role);
+
     void update(Role role);
 }

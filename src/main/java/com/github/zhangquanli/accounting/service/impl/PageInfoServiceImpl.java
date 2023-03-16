@@ -56,7 +56,7 @@ public class PageInfoServiceImpl implements PageInfoService {
     public void insert(PageInfo pageInfo) {
         // 关联的【组件】集合
         List<ComponentInfo> componentInfos = pageInfo.getComponentInfos()
-                .parallelStream()
+                .stream()
                 .peek(componentInfo -> {
                     processComponent(componentInfo);
                     componentInfo.setPageInfo(pageInfo);
@@ -75,7 +75,8 @@ public class PageInfoServiceImpl implements PageInfoService {
         pageInfo.getApiInfos().addAll(apiInfos);
 
         // 关联的【组件】集合
-        List<ComponentInfo> componentInfos = pageInfo.getComponentInfos().stream()
+        List<ComponentInfo> componentInfos = pageInfo.getComponentInfos()
+                .stream()
                 .peek(componentInfo -> {
                     processComponent(componentInfo);
                     componentInfo.setPageInfo(pageInfo);
@@ -90,7 +91,8 @@ public class PageInfoServiceImpl implements PageInfoService {
 
     private void processComponent(ComponentInfo componentInfo) {
         // 关联的【接口】集合
-        List<Integer> apiIds = componentInfo.getApiInfos().stream()
+        List<Integer> apiIds = componentInfo.getApiInfos()
+                .stream()
                 .map(BaseEntity::getId)
                 .collect(Collectors.toList());
         List<ApiInfo> apiInfos = apiInfoRepository.findAllById(apiIds);
@@ -98,7 +100,8 @@ public class PageInfoServiceImpl implements PageInfoService {
         componentInfo.getApiInfos().addAll(apiInfos);
 
         // 关联的【展示字段】集合
-        List<DisplayColumn> displayColumns = componentInfo.getDisplayColumns().parallelStream()
+        List<DisplayColumn> displayColumns = componentInfo.getDisplayColumns()
+                .stream()
                 .peek(displayColumn -> displayColumn.setComponentInfo(componentInfo))
                 .collect(Collectors.toList());
         componentInfo.getDisplayColumns().clear();

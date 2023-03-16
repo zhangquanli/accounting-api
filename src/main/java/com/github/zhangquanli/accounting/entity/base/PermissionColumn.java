@@ -5,11 +5,8 @@ import com.github.zhangquanli.accounting.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * 权限字段
@@ -22,30 +19,21 @@ import java.util.Set;
 @Setter
 public class PermissionColumn extends BaseEntity {
     /**
-     * 字段名称，如：省
+     * 权限名称
      */
     @Column(nullable = false)
     private String name;
     /**
-     * 字段代码，如：province
+     * 权限等级，如：分公司
      */
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String code;
-    /**
-     * 字段分类，如：地域
-     */
-    @Column(nullable = false)
-    private String category;
-    /**
-     * 查询SQL，如：select name as label, code as value from province
-     */
-    @Column(nullable = false)
-    private String querySql;
+    private PermissionLevel level;
 
 
-    @JsonIgnoreProperties({"parent", "children"})
+    @JsonIgnoreProperties({"parent"})
     @OneToMany(mappedBy = "parent")
-    private Set<PermissionColumn> children;
+    private List<PermissionColumn> children;
     @JsonIgnoreProperties({"parent", "children"})
     @ManyToOne
     private PermissionColumn parent;

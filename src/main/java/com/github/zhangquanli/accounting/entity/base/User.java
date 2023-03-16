@@ -7,10 +7,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 用户
@@ -22,17 +22,23 @@ import java.util.Collection;
 @Getter
 @Setter
 public class User extends BaseEntity implements UserDetails {
-
     /**
      * 账号
      */
     @Column(nullable = false, unique = true)
     private String username;
-
     /**
      * 密码
      */
     private String password;
+    /**
+     * 关联的【角色】集合
+     */
+    @ManyToMany
+    @JoinTable(name = "user_rel_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private List<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

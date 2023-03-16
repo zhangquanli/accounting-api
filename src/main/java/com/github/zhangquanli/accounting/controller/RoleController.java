@@ -26,6 +26,12 @@ public class RoleController {
         return roleService.selectList();
     }
 
+    @PostMapping
+    public void insert(@RequestBody Role role) {
+        role.setId(null);
+        roleService.insert(role);
+    }
+
     @PutMapping("/{id}")
     public void update(@PathVariable("id") Integer id, @RequestBody Role role) {
         role.setId(id);
