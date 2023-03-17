@@ -1,10 +1,6 @@
 package com.github.zhangquanli.accounting.service.impl;
 
-import com.github.zhangquanli.accounting.entity.BaseEntity;
-import com.github.zhangquanli.accounting.entity.base.ApiInfo;
-import com.github.zhangquanli.accounting.entity.base.ComponentInfo;
-import com.github.zhangquanli.accounting.entity.base.DisplayColumn;
-import com.github.zhangquanli.accounting.entity.base.PageInfo;
+import com.github.zhangquanli.accounting.entity.base.*;
 import com.github.zhangquanli.accounting.repository.ApiInfoRepository;
 import com.github.zhangquanli.accounting.repository.PageInfoRepository;
 import com.github.zhangquanli.accounting.service.PageInfoService;
@@ -69,8 +65,13 @@ public class PageInfoServiceImpl implements PageInfoService {
 
     @Override
     public void update(PageInfo pageInfo) {
+        // 关联的【权限字段】集合
+        List<PermissionColumn> permissionColumns = new ArrayList<>(pageInfo.getPermissionColumns());
+        pageInfo.getPermissionColumns().clear();
+        pageInfo.getPermissionColumns().addAll(permissionColumns);
+
         // 关联的【接口】集合
-        List<ApiInfo> apiInfos = pageInfo.getApiInfos();
+        List<ApiInfo> apiInfos = new ArrayList<>(pageInfo.getApiInfos());
         pageInfo.getApiInfos().clear();
         pageInfo.getApiInfos().addAll(apiInfos);
 
@@ -91,11 +92,7 @@ public class PageInfoServiceImpl implements PageInfoService {
 
     private void processComponent(ComponentInfo componentInfo) {
         // 关联的【接口】集合
-        List<Integer> apiIds = componentInfo.getApiInfos()
-                .stream()
-                .map(BaseEntity::getId)
-                .collect(Collectors.toList());
-        List<ApiInfo> apiInfos = apiInfoRepository.findAllById(apiIds);
+        List<ApiInfo> apiInfos = new ArrayList<>(componentInfo.getApiInfos());
         componentInfo.getApiInfos().clear();
         componentInfo.getApiInfos().addAll(apiInfos);
 
