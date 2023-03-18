@@ -6,33 +6,32 @@ import com.github.zhangquanli.accounting.entity.base.RoleRelDisplayColumn;
 import com.github.zhangquanli.accounting.entity.base.RoleRelPageInfo;
 import com.github.zhangquanli.accounting.repository.RoleRepository;
 import com.github.zhangquanli.accounting.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional(rollbackFor = RuntimeException.class)
 @Service
 public class RoleServiceImpl implements RoleService {
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
+    public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
     @Override
-    public List<Role> selectList() {
+    public List<Role> selectTree() {
         Specification<Role> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             Predicate predicate = cb.isNull(root.get("parent"));
             predicates.add(predicate);
             return cb.and(predicates.toArray(new Predicate[0]));
         };
-
         return roleRepository.findAll(specification);
     }
 

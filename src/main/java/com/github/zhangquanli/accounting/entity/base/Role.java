@@ -36,7 +36,7 @@ public class Role extends BaseEntity {
     /**
      * 权限字段
      */
-    @JsonIgnoreProperties({"parent"})
+    @JsonIgnoreProperties({"parent", "children"})
     @NotNull
     @ManyToOne
     private PermissionColumn permissionColumn;

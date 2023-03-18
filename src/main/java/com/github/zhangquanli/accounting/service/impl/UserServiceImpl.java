@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
  * @author zhangquanli
  * @since 2023/3/14
  */
+@Transactional(rollbackFor = RuntimeException.class)
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
