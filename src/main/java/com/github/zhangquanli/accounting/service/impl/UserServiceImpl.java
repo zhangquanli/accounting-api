@@ -1,11 +1,11 @@
 package com.github.zhangquanli.accounting.service.impl;
 
 import com.github.zhangquanli.accounting.entity.base.User;
+import com.github.zhangquanli.accounting.entity.base.UserRelRole;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.UserQuery;
 import com.github.zhangquanli.accounting.repository.UserRepository;
 import com.github.zhangquanli.accounting.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户管理
@@ -25,10 +26,9 @@ import java.util.List;
 @Transactional(rollbackFor = RuntimeException.class)
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -36,8 +36,10 @@ public class UserServiceImpl implements UserService {
     public Page<User> selectPage(UserQuery userQuery, PageableQuery pageableQuery) {
         Specification<User> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-            Predicate predicate = cb.like(root.get("username"), "%" + userQuery.getUsername() + "%");
-            predicates.add(predicate);
+            if (userQuery.getUsername() != null) {
+                Predicate predicate = cb.like(root.get("username"), "%" + userQuery.getUsername() + "%");
+                predicates.add(predicate);
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
         PageRequest pageRequest = PageRequest.of(pageableQuery.getPage() - 1, pageableQuery.getSize());
@@ -46,11 +48,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void insert(User user) {
+        // 关联的【角色】集合
+        List<UserRelRole> userRelRoles = user.getUserRelRoles()
+                .stream()
+                .peek(userRelRole -> userRelRole.setUser(user))
+                .collect(Collectors.toList());
+        user.setUserRelRoles(userRelRoles);
+
+        // 新增【用户】
         userRepository.save(user);
     }
 
     @Override
     public void update(User user) {
+        // 关联的【角色】集合
+        List<UserRelRole> userRelRoles = user.getUserRelRoles()
+                .stream()
+                .peek(userRelRole -> userRelRole.setUser(user))
+                .collect(Collectors.toList());
+        user.getUserRelRoles().clear();
+        user.getUserRelRoles().addAll(userRelRoles);
+
+        // 修改【用户】
         userRepository.save(user);
     }
 }

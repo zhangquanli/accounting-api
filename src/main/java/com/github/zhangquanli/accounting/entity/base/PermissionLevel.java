@@ -28,13 +28,19 @@ public enum PermissionLevel {
     ALL("全部", "", null) {
         @Override
         public List<OptionType> getOptions(String parentCode) {
-            return null;
+            OptionType optionType = new OptionType();
+            optionType.setValue("0");
+            optionType.setLabel("全部");
+            OptionType.Level level = OptionType.Level.builder()
+                    .value(this.toString()).label(this.getName()).build();
+            optionType.setLevel(level);
+            return Collections.singletonList(optionType);
         }
     },
     PROVINCE_AGENT("省级代理", "agent_id", ALL) {
         @Override
         public List<OptionType> getOptions(String parentCode) {
-            return null;
+            return Collections.emptyList();
         }
     },
     PROVINCE("省级", "province_id", ALL) {
@@ -46,7 +52,9 @@ public enum PermissionLevel {
                 OptionType optionType = new OptionType();
                 optionType.setValue(province.getCode());
                 optionType.setLabel(province.getName());
-                optionType.setLevel(PROVINCE);
+                OptionType.Level level = OptionType.Level.builder()
+                        .value(this.toString()).label(this.getName()).build();
+                optionType.setLevel(level);
                 return optionType;
             }).collect(Collectors.toList());
         }
@@ -60,7 +68,9 @@ public enum PermissionLevel {
                 OptionType optionType = new OptionType();
                 optionType.setValue(city.getCode());
                 optionType.setLabel(city.getName());
-                optionType.setLevel(CITY);
+                OptionType.Level level = OptionType.Level.builder()
+                        .value(this.toString()).label(this.getName()).build();
+                optionType.setLevel(level);
                 return optionType;
             }).collect(Collectors.toList());
 
@@ -75,7 +85,9 @@ public enum PermissionLevel {
                 OptionType optionType = new OptionType();
                 optionType.setValue(district.getCode());
                 optionType.setLabel(district.getName());
-                optionType.setLevel(DISTRICT);
+                OptionType.Level level = OptionType.Level.builder()
+                        .value(this.toString()).label(this.getName()).build();
+                optionType.setLevel(level);
                 return optionType;
             }).collect(Collectors.toList());
         }
@@ -89,7 +101,9 @@ public enum PermissionLevel {
                 OptionType optionType = new OptionType();
                 optionType.setValue(town.getCode());
                 optionType.setLabel(town.getName());
-                optionType.setLevel(TOWN);
+                OptionType.Level level = OptionType.Level.builder()
+                        .value(this.toString()).label(this.getName()).build();
+                optionType.setLevel(level);
                 return optionType;
             }).collect(Collectors.toList());
         }

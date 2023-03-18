@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
  * @author zhangquanli
  * @since 2023/3/13
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Getter
 @Setter

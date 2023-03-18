@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,11 @@ public class RoleServiceImpl implements RoleService {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
         return roleRepository.findAll(specification);
+    }
+
+    @Override
+    public Role selectOne(Integer id) {
+        return roleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

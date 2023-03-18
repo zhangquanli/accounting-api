@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
  * @author zhangquanli
  * @since 2022/3/22 16:45:00
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Getter
 @Setter
@@ -39,8 +41,9 @@ public class User extends BaseEntity implements UserDetails {
      * 关联的【角色】集合
      */
     @JsonIgnoreProperties({"user"})
+    @Valid
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private List<UserRelRole> roles;
+    private List<UserRelRole> userRelRoles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -7,6 +7,8 @@ import java.util.List;
 public interface RoleService {
     List<Role> selectTree();
 
+    Role selectOne(Integer id);
+
     void insert(Role role);
 
     void update(Role role);

@@ -1,6 +1,7 @@
 package com.github.zhangquanli.accounting.entity.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotNull;
  * @author zhangquanli
  * @since 2023/2/27
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Getter
 @Setter

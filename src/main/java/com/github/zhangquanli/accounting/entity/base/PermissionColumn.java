@@ -14,6 +14,7 @@ import java.util.List;
  * @author zhangquanli
  * @since 2023/3/2
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Getter
 @Setter

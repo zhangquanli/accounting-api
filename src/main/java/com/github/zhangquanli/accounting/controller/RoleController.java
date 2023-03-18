@@ -27,6 +27,11 @@ public class RoleController {
         return roleService.selectTree();
     }
 
+    @GetMapping("/{id}")
+    public Role selectOne(@PathVariable Integer id) {
+        return roleService.selectOne(id);
+    }
+
     @PostMapping
     public void insert(@Valid @RequestBody Role role) {
         role.setId(null);

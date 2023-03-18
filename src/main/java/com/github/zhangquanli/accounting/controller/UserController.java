@@ -4,7 +4,6 @@ import com.github.zhangquanli.accounting.entity.base.User;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.UserQuery;
 import com.github.zhangquanli.accounting.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,26 +18,25 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 @RestController
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    public void setUserService(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/selectPage")
     public Page<User> selectPage(UserQuery userQuery, @Valid PageableQuery pageableQuery) {
         return userService.selectPage(userQuery, pageableQuery);
     }
 
     @PostMapping
-    public void insert(@RequestBody User user) {
+    public void insert(@Valid @RequestBody User user) {
         user.setId(null);
         userService.insert(user);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Integer id, @RequestBody User user) {
+    public void update(@PathVariable Integer id, @Valid @RequestBody User user) {
         user.setId(id);
         userService.update(user);
     }
