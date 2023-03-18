@@ -1,7 +1,6 @@
 package com.github.zhangquanli.accounting.service.impl;
 
 import com.github.zhangquanli.accounting.entity.base.*;
-import com.github.zhangquanli.accounting.repository.ApiInfoRepository;
 import com.github.zhangquanli.accounting.repository.PageInfoRepository;
 import com.github.zhangquanli.accounting.service.PageInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional(rollbackFor = RuntimeException.class)
 @Service
 public class PageInfoServiceImpl implements PageInfoService {
     private PageInfoRepository pageInfoRepository;
-    private ApiInfoRepository apiInfoRepository;
 
     @Autowired
     public void setPageRepository(PageInfoRepository pageInfoRepository) {
         this.pageInfoRepository = pageInfoRepository;
     }
 
-    @Autowired
-    public void setApiRepository(ApiInfoRepository apiInfoRepository) {
-        this.apiInfoRepository = apiInfoRepository;
-    }
-
     @Override
-    public List<PageInfo> selectList() {
+    public List<PageInfo> selectTree() {
         Specification<PageInfo> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             Predicate predicate = cb.isNull(root.get("parent"));
@@ -43,12 +37,6 @@ public class PageInfoServiceImpl implements PageInfoService {
     }
 
     @Override
-    public List<ApiInfo> selectApis() {
-        return apiInfoRepository.findAll();
-    }
-
-    @Transactional(rollbackFor = RuntimeException.class)
-    @Override
     public void insert(PageInfo pageInfo) {
         // 关联的【组件】集合
         List<ComponentInfo> componentInfos = pageInfo.getComponentInfos()
@@ -57,7 +45,7 @@ public class PageInfoServiceImpl implements PageInfoService {
                     processComponent(componentInfo);
                     componentInfo.setPageInfo(pageInfo);
                 }).collect(Collectors.toList());
-        pageInfo.getComponentInfos().addAll(componentInfos);
+        pageInfo.setComponentInfos(componentInfos);
 
         // 新增【页面】
         pageInfoRepository.save(pageInfo);

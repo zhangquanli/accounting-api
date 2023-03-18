@@ -1,11 +1,10 @@
 package com.github.zhangquanli.accounting.controller;
 
-import com.github.zhangquanli.accounting.entity.base.ApiInfo;
 import com.github.zhangquanli.accounting.entity.base.PageInfo;
 import com.github.zhangquanli.accounting.service.PageInfoService;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,25 +25,20 @@ public class PageInfoController {
         this.pageInfoService = pageInfoService;
     }
 
-    @GetMapping
-    public List<PageInfo> selectList() {
-        return pageInfoService.selectList();
-    }
-
-    @GetMapping("/apiInfos")
-    public List<ApiInfo> selectApis() {
-        return pageInfoService.selectApis();
+    @GetMapping("/selectTree")
+    public List<PageInfo> selectTree() {
+        return pageInfoService.selectTree();
     }
 
     @PostMapping
-    public void insert(@Validated @RequestBody PageInfo pageInfo) {
+    public void insert(@Valid @RequestBody PageInfo pageInfo) {
         pageInfo.setId(null);
         validate(pageInfo);
         pageInfoService.insert(pageInfo);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Integer id, @Validated @RequestBody PageInfo pageInfo) {
+    public void update(@PathVariable Integer id, @Valid @RequestBody PageInfo pageInfo) {
         pageInfo.setId(id);
         validate(pageInfo);
         pageInfoService.update(pageInfo);

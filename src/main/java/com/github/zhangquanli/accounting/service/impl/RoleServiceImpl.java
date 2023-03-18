@@ -39,25 +39,25 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void insert(Role role) {
         // 关联的【页面】
-        List<RoleRelPageInfo> pageInfos = role.getPageInfos()
+        List<RoleRelPageInfo> pageInfos = role.getRoleRelPageInfos()
                 .stream()
                 .peek(roleRelPageInfo -> roleRelPageInfo.setRole(role))
                 .collect(Collectors.toList());
-        role.setPageInfos(pageInfos);
+        role.setRoleRelPageInfos(pageInfos);
 
         // 关联的【组件】
-        List<RoleRelComponentInfo> componentInfos = role.getComponentInfos()
+        List<RoleRelComponentInfo> componentInfos = role.getRoleRelComponentInfos()
                 .stream()
                 .peek(roleRelComponentInfo -> roleRelComponentInfo.setRole(role))
                 .collect(Collectors.toList());
-        role.setComponentInfos(componentInfos);
+        role.setRoleRelComponentInfos(componentInfos);
 
         // 关联的【展示字段】
-        List<RoleRelDisplayColumn> displayColumns = role.getDisplayColumns()
+        List<RoleRelDisplayColumn> displayColumns = role.getRoleRelDisplayColumns()
                 .stream()
                 .peek(roleRelDisplayColumn -> roleRelDisplayColumn.setRole(role))
                 .collect(Collectors.toList());
-        role.setDisplayColumns(displayColumns);
+        role.setRoleRelDisplayColumns(displayColumns);
 
         // 保存【角色】
         roleRepository.save(role);
@@ -66,28 +66,28 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void update(Role role) {
         // 关联的【页面】
-        List<RoleRelPageInfo> pageInfos = role.getPageInfos()
+        List<RoleRelPageInfo> pageInfos = role.getRoleRelPageInfos()
                 .stream()
                 .peek(roleRelPageInfo -> roleRelPageInfo.setRole(role))
                 .collect(Collectors.toList());
-        role.getPageInfos().clear();
-        role.getPageInfos().addAll(pageInfos);
+        role.getRoleRelPageInfos().clear();
+        role.getRoleRelPageInfos().addAll(pageInfos);
 
         // 关联的【组件】
-        List<RoleRelComponentInfo> componentInfos = role.getComponentInfos()
+        List<RoleRelComponentInfo> componentInfos = role.getRoleRelComponentInfos()
                 .stream()
                 .peek(roleRelComponentInfo -> roleRelComponentInfo.setRole(role))
                 .collect(Collectors.toList());
-        role.getComponentInfos().clear();
-        role.getComponentInfos().addAll(componentInfos);
+        role.getRoleRelComponentInfos().clear();
+        role.getRoleRelComponentInfos().addAll(componentInfos);
 
         // 关联的【展示字段】
-        List<RoleRelDisplayColumn> displayColumns = role.getDisplayColumns()
+        List<RoleRelDisplayColumn> displayColumns = role.getRoleRelDisplayColumns()
                 .stream()
                 .peek(roleRelDisplayColumn -> roleRelDisplayColumn.setRole(role))
                 .collect(Collectors.toList());
-        role.getDisplayColumns().clear();
-        role.getDisplayColumns().addAll(displayColumns);
+        role.getRoleRelDisplayColumns().clear();
+        role.getRoleRelDisplayColumns().addAll(displayColumns);
 
         // 保存【角色】
         roleRepository.save(role);

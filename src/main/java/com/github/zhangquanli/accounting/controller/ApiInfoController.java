@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 接口管理
@@ -24,7 +25,12 @@ public class ApiInfoController {
         this.apiInfoService = apiInfoService;
     }
 
-    @GetMapping
+    @GetMapping("/selectList")
+    public List<ApiInfo> selectList() {
+        return apiInfoService.selectList();
+    }
+
+    @GetMapping("/selectPage")
     public Page<ApiInfo> selectPage(ApiInfoQuery apiInfoQuery, @Valid PageableQuery pageableQuery) {
         return apiInfoService.selectPage(apiInfoQuery, pageableQuery);
     }

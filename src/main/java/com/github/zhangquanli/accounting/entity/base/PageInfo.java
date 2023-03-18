@@ -57,7 +57,7 @@ public class PageInfo extends BaseEntity implements Serializable {
     @JoinTable(name = "page_info_rel_permission_column",
             joinColumns = @JoinColumn(name = "page_info_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_column_id"))
-    private List<PermissionColumn> permissionColumns;
+    private List<PermissionColumn> permissionColumns = Collections.emptyList();
     /**
      * 关联的【接口】集合
      */
