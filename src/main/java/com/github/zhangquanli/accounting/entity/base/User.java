@@ -1,5 +1,6 @@
 package com.github.zhangquanli.accounting.entity.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +8,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -34,11 +38,9 @@ public class User extends BaseEntity implements UserDetails {
     /**
      * 关联的【角色】集合
      */
-    @ManyToMany
-    @JoinTable(name = "user_rel_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<Role> roles;
+    @JsonIgnoreProperties({"user"})
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<UserRelRole> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

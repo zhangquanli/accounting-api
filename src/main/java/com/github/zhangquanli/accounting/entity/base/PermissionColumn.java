@@ -31,10 +31,10 @@ public class PermissionColumn extends BaseEntity {
     private PermissionLevel level;
 
 
-    @JsonIgnoreProperties({"parent"})
-    @OneToMany(mappedBy = "parent")
-    private List<PermissionColumn> children;
     @JsonIgnoreProperties({"parent", "children"})
     @ManyToOne
     private PermissionColumn parent;
+    @JsonIgnoreProperties({"parent"})
+    @OneToMany(mappedBy = "parent")
+    private List<PermissionColumn> children;
 }

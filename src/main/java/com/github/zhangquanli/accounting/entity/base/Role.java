@@ -33,47 +33,48 @@ public class Role extends BaseEntity {
     @NotNull
     @Column(nullable = false)
     private String code;
+    /**
+     * 权限字段
+     */
+    @JsonIgnoreProperties({"parent", "children"})
+    @NotNull
+    @ManyToOne
+    private PermissionColumn permissionColumn;
 
 
     /**
      * 关联的【页面】集合
      */
+    @JsonIgnoreProperties({"role"})
     @Valid
     @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<RoleRelPageInfo> pageInfos = Collections.emptyList();
     /**
      * 关联的【组件】集合
      */
+    @JsonIgnoreProperties({"role"})
     @Valid
     @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<RoleRelComponentInfo> componentInfos = Collections.emptyList();
     /**
      * 关联的【展示字段】集合
      */
+    @JsonIgnoreProperties({"role"})
     @Valid
     @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<RoleRelDisplayColumn> displayColumns = Collections.emptyList();
 
 
-//    /**
-//     * 关联的【权限字段】集合
-//     */
-//    @ManyToMany
-//    @JoinTable(name = "role_rel_permission_column",
-//            joinColumns = {@JoinColumn(name = "role_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "permission_column_id")})
-//    private List<PermissionColumn> permissionColumns;
-
-
     /**
      * 父级角色
      */
-    @JsonIgnoreProperties({"parent", "children"})
+    @JsonIgnoreProperties({"pageInfos", "componentInfos", "displayColumns", "parent", "children"})
     @ManyToOne
     private Role parent;
     /**
      * 子级角色集合
      */
+    @JsonIgnoreProperties({"pageInfos", "componentInfos", "displayColumns", "parent"})
     @OneToMany(mappedBy = "parent")
     private List<Role> children;
 }

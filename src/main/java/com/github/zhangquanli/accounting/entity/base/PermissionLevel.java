@@ -46,6 +46,7 @@ public enum PermissionLevel {
                 OptionType optionType = new OptionType();
                 optionType.setValue(province.getCode());
                 optionType.setLabel(province.getName());
+                optionType.setLevel(PROVINCE);
                 return optionType;
             }).collect(Collectors.toList());
         }
@@ -59,6 +60,7 @@ public enum PermissionLevel {
                 OptionType optionType = new OptionType();
                 optionType.setValue(city.getCode());
                 optionType.setLabel(city.getName());
+                optionType.setLevel(CITY);
                 return optionType;
             }).collect(Collectors.toList());
 
@@ -73,6 +75,7 @@ public enum PermissionLevel {
                 OptionType optionType = new OptionType();
                 optionType.setValue(district.getCode());
                 optionType.setLabel(district.getName());
+                optionType.setLevel(DISTRICT);
                 return optionType;
             }).collect(Collectors.toList());
         }
@@ -86,6 +89,7 @@ public enum PermissionLevel {
                 OptionType optionType = new OptionType();
                 optionType.setValue(town.getCode());
                 optionType.setLabel(town.getName());
+                optionType.setLevel(TOWN);
                 return optionType;
             }).collect(Collectors.toList());
         }

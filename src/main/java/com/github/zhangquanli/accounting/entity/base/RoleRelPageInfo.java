@@ -30,7 +30,6 @@ public class RoleRelPageInfo extends BaseEntity {
     /**
      * 角色
      */
-    @JsonIgnoreProperties({"pageInfos", "componentInfos", "displayColumns", "parent", "children"})
     @ManyToOne
     @JoinColumn(nullable = false)
     private Role role;
@@ -38,7 +37,7 @@ public class RoleRelPageInfo extends BaseEntity {
      * 页面
      */
     @NotNull
-    @JsonIgnoreProperties({"apiInfos", "componentInfos", "parent", "children"})
+    @JsonIgnoreProperties({"permissionColumns", "apiInfos", "componentInfos", "parent", "children"})
     @ManyToOne
     @JoinColumn(nullable = false)
     private PageInfo pageInfo;

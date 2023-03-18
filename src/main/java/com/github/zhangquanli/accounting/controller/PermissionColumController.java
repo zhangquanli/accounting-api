@@ -1,6 +1,8 @@
 package com.github.zhangquanli.accounting.controller;
 
+import com.github.zhangquanli.accounting.entity.base.OptionType;
 import com.github.zhangquanli.accounting.entity.base.PermissionColumn;
+import com.github.zhangquanli.accounting.entity.base.PermissionLevel;
 import com.github.zhangquanli.accounting.service.PermissionColumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,5 +31,10 @@ public class PermissionColumController {
     @GetMapping
     public List<PermissionColumn> selectList() {
         return permissionColumService.selectList();
+    }
+
+    @GetMapping("/options")
+    public List<OptionType> getOptions(PermissionLevel level, String parentCode) {
+        return level.getOptions(parentCode);
     }
 }
