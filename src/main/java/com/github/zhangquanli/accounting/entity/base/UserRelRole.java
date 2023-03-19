@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class UserRelRole extends BaseEntity {
     /**
-     * 权限字段，如：510101
+     * 权限字段，如：510104
      */
     @NotNull
     @Column(nullable = false)
@@ -36,7 +36,7 @@ public class UserRelRole extends BaseEntity {
     @Column(nullable = false)
     private String label;
     /**
-     * 完整的权限字段，如：0,51,5101,510101
+     * 完整的权限字段，如：0,51,5101,510104
      */
     private String fullValue;
     /**
