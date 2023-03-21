@@ -1,16 +1,14 @@
 package com.github.zhangquanli.accounting.service;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.ApiInfo;
 import com.github.zhangquanli.accounting.query.ApiInfoQuery;
 import com.github.zhangquanli.accounting.query.PageableQuery;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface ApiInfoService {
-    List<ApiInfo> selectList();
+    ListResult<ApiInfo> selectAll(ApiInfoQuery apiInfoQuery, PageableQuery pageableQuery);
 
-    Page<ApiInfo> selectPage(ApiInfoQuery apiInfoQuery, PageableQuery pageableQuery);
+    ApiInfo selectOne(Integer id);
 
     void insert(ApiInfo apiInfo);
 

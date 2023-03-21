@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PermissionColumService {
     List<PermissionColumn> selectList();
+
+    PermissionColumn selectOne(Integer id);
 }

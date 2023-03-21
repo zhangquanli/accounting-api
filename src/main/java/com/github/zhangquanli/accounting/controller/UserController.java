@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * 角色管理
+ * 用户管理
  *
  * @author zhangquanli
  * @since 2023/3/14

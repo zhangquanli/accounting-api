@@ -1,14 +1,13 @@
 package com.github.zhangquanli.accounting.controller;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.ApiInfo;
 import com.github.zhangquanli.accounting.query.ApiInfoQuery;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.service.ApiInfoService;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * 接口管理
@@ -25,14 +24,14 @@ public class ApiInfoController {
         this.apiInfoService = apiInfoService;
     }
 
-    @GetMapping("/selectList")
-    public List<ApiInfo> selectList() {
-        return apiInfoService.selectList();
+    @GetMapping
+    public ListResult<ApiInfo> selectAll(ApiInfoQuery apiInfoQuery, PageableQuery pageableQuery) {
+        return apiInfoService.selectAll(apiInfoQuery, pageableQuery);
     }
 
-    @GetMapping("/selectPage")
-    public Page<ApiInfo> selectPage(ApiInfoQuery apiInfoQuery, @Valid PageableQuery pageableQuery) {
-        return apiInfoService.selectPage(apiInfoQuery, pageableQuery);
+    @GetMapping("/{id}")
+    public ApiInfo selectOne(@PathVariable Integer id) {
+        return apiInfoService.selectOne(id);
     }
 
     @PostMapping

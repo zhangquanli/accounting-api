@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 public interface UserService {
     Page<User> selectPage(UserQuery userQuery, PageableQuery pageableQuery);
 
+    User selectByUsername(String username);
+
     void insert(User user);
 
     void update(User user);

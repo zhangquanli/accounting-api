@@ -47,6 +47,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User selectByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     public void insert(User user) {
         // 关联的【角色】集合
         List<UserRelRole> userRelRoles = user.getUserRelRoles()

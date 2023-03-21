@@ -6,6 +6,7 @@ import com.github.zhangquanli.accounting.entity.base.PermissionLevel;
 import com.github.zhangquanli.accounting.service.PermissionColumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,10 +28,14 @@ public class PermissionColumController {
         this.permissionColumService = permissionColumService;
     }
 
-
     @GetMapping
     public List<PermissionColumn> selectList() {
         return permissionColumService.selectList();
+    }
+
+    @GetMapping("/{id}")
+    public PermissionColumn selectOne(@PathVariable Integer id) {
+        return permissionColumService.selectOne(id);
     }
 
     @GetMapping("/options")

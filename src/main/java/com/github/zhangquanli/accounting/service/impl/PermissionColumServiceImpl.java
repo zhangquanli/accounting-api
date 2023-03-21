@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,5 +30,10 @@ public class PermissionColumServiceImpl implements PermissionColumService {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
         return permissionColumnRepository.findAll(specification);
+    }
+
+    @Override
+    public PermissionColumn selectOne(Integer id) {
+        return permissionColumnRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

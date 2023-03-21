@@ -1,6 +1,5 @@
 package com.github.zhangquanli.accounting.entity.base;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
 import lombok.Getter;
@@ -43,14 +42,14 @@ public class UserRelRole extends BaseEntity {
      * 完整的权限字段，如：全部,四川省,成都市,锦江区
      */
     private String fullLabel;
-    @JsonIgnoreProperties({"roleRelPageInfos", "roleRelComponentInfos", "roleRelDisplayColumns", "parent", "children"})
     @NotNull
+    @JsonIgnoreProperties({"roleRelPageInfos", "roleRelComponentInfos", "roleRelDisplayColumns", "parent", "children"})
     @ManyToOne
     @JoinColumn(nullable = false)
     private Role role;
 
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"userRelRoles"})
     @ManyToOne
     private User user;
 }

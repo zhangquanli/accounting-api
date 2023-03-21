@@ -1,16 +1,18 @@
 package com.github.zhangquanli.accounting.service.impl;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.ApiInfo;
 import com.github.zhangquanli.accounting.query.ApiInfoQuery;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.repository.ApiInfoRepository;
 import com.github.zhangquanli.accounting.service.ApiInfoService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +27,35 @@ public class ApiInfoServiceImpl implements ApiInfoService {
     }
 
     @Override
-    public List<ApiInfo> selectList() {
-        return apiInfoRepository.findAll();
+    public ListResult<ApiInfo> selectAll(ApiInfoQuery apiInfoQuery, PageableQuery pageableQuery) {
+        Specification<ApiInfo> specification = toSpecification(apiInfoQuery);
+        if (PageableQuery.pageable(pageableQuery)) {
+            Pageable pageable = PageableQuery.toPageable(pageableQuery);
+            Page<ApiInfo> apiInfos = apiInfoRepository.findAll(specification, pageable);
+            return ListResult.create(apiInfos);
+        } else {
+            List<ApiInfo> apiInfos = apiInfoRepository.findAll(specification);
+            return ListResult.create(apiInfos);
+        }
     }
 
     @Override
-    public Page<ApiInfo> selectPage(ApiInfoQuery apiInfoQuery, PageableQuery pageableQuery) {
-        Specification<ApiInfo> specification = (root, query, cb) -> {
+    public ApiInfo selectOne(Integer id) {
+        return apiInfoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public void insert(ApiInfo apiInfo) {
+        apiInfoRepository.save(apiInfo);
+    }
+
+    @Override
+    public void update(ApiInfo apiInfo) {
+        apiInfoRepository.save(apiInfo);
+    }
+
+    private Specification<ApiInfo> toSpecification(ApiInfoQuery apiInfoQuery) {
+        return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (apiInfoQuery.getName() != null) {
                 Predicate predicate = cb.like(root.get("name"), "%" + apiInfoQuery.getName() + "%");
@@ -43,18 +67,5 @@ public class ApiInfoServiceImpl implements ApiInfoService {
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
-        PageRequest pageRequest = PageRequest.of(pageableQuery.getPage() - 1,
-                pageableQuery.getSize());
-        return apiInfoRepository.findAll(specification, pageRequest);
-    }
-
-    @Override
-    public void insert(ApiInfo apiInfo) {
-        apiInfoRepository.save(apiInfo);
-    }
-
-    @Override
-    public void update(ApiInfo apiInfo) {
-        apiInfoRepository.save(apiInfo);
     }
 }
