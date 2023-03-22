@@ -87,6 +87,7 @@ public class PageInfo extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "parent")
     private List<PageInfo> children = Collections.emptyList();
 
+
     public enum Type {
         /**
          * 虚拟

@@ -1,5 +1,6 @@
 package com.github.zhangquanli.accounting.service.impl;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.Role;
 import com.github.zhangquanli.accounting.entity.base.RoleRelComponentInfo;
 import com.github.zhangquanli.accounting.entity.base.RoleRelDisplayColumn;
@@ -26,14 +27,15 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> selectTree() {
+    public ListResult<Role> selectAll() {
         Specification<Role> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             Predicate predicate = cb.isNull(root.get("parent"));
             predicates.add(predicate);
             return cb.and(predicates.toArray(new Predicate[0]));
         };
-        return roleRepository.findAll(specification);
+        List<Role> roles = roleRepository.findAll(specification);
+        return ListResult.create(roles);
     }
 
     @Override

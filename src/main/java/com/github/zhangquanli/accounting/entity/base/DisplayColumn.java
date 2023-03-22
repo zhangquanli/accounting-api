@@ -42,6 +42,7 @@ public class DisplayColumn extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String num;
 
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(nullable = false)

@@ -1,10 +1,10 @@
 package com.github.zhangquanli.accounting.controller;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.User;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.UserQuery;
 import com.github.zhangquanli.accounting.service.UserService;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,10 +24,16 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/selectPage")
-    public Page<User> selectPage(UserQuery userQuery, @Valid PageableQuery pageableQuery) {
-        return userService.selectPage(userQuery, pageableQuery);
+    @GetMapping
+    public ListResult<User> selectAll(UserQuery userQuery, PageableQuery pageableQuery) {
+        return userService.selectAll(userQuery, pageableQuery);
     }
+
+    @GetMapping("/{id}")
+    public User selectOne(@PathVariable Integer id) {
+        return userService.selectOne(id);
+    }
+
 
     @PostMapping
     public void insert(@Valid @RequestBody User user) {

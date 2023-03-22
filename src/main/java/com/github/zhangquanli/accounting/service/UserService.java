@@ -1,9 +1,9 @@
 package com.github.zhangquanli.accounting.service;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.User;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.UserQuery;
-import org.springframework.data.domain.Page;
 
 /**
  * 用户管理
@@ -12,7 +12,9 @@ import org.springframework.data.domain.Page;
  * @since 2023/3/14
  */
 public interface UserService {
-    Page<User> selectPage(UserQuery userQuery, PageableQuery pageableQuery);
+    ListResult<User> selectAll(UserQuery userQuery, PageableQuery pageableQuery);
+
+    User selectOne(Integer id);
 
     User selectByUsername(String username);
 

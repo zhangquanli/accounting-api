@@ -42,6 +42,7 @@ public class ComponentInfo extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String num;
 
+
     /**
      * 关联的【接口】集合
      */
@@ -56,6 +57,8 @@ public class ComponentInfo extends BaseEntity {
     @Valid
     @OneToMany(mappedBy = "componentInfo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<DisplayColumn> displayColumns = Collections.emptyList();
+
+
     /**
      * 关联的【页面】
      */

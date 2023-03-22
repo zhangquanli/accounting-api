@@ -1,14 +1,15 @@
 package com.github.zhangquanli.accounting.service.impl;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.*;
 import com.github.zhangquanli.accounting.repository.PageInfoRepository;
 import com.github.zhangquanli.accounting.service.PageInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +18,14 @@ import java.util.stream.Collectors;
 @Transactional(rollbackFor = RuntimeException.class)
 @Service
 public class PageInfoServiceImpl implements PageInfoService {
-    private PageInfoRepository pageInfoRepository;
+    private final PageInfoRepository pageInfoRepository;
 
-    @Autowired
-    public void setPageRepository(PageInfoRepository pageInfoRepository) {
+    public PageInfoServiceImpl(PageInfoRepository pageInfoRepository) {
         this.pageInfoRepository = pageInfoRepository;
     }
 
     @Override
-    public List<PageInfo> selectTree() {
+    public ListResult<PageInfo> selectAll() {
         Specification<PageInfo> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             Predicate predicate = cb.isNull(root.get("parent"));
@@ -33,7 +33,13 @@ public class PageInfoServiceImpl implements PageInfoService {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
         Sort sort = Sort.by(Sort.Order.desc("type"));
-        return pageInfoRepository.findAll(specification, sort);
+        List<PageInfo> pageInfos = pageInfoRepository.findAll(specification, sort);
+        return ListResult.create(pageInfos);
+    }
+
+    @Override
+    public PageInfo selectOne(Integer id) {
+        return pageInfoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

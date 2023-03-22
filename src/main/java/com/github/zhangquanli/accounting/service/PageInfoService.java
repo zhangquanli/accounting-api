@@ -1,11 +1,12 @@
 package com.github.zhangquanli.accounting.service;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.PageInfo;
 
-import java.util.List;
-
 public interface PageInfoService {
-    List<PageInfo> selectTree();
+    ListResult<PageInfo> selectAll();
+
+    PageInfo selectOne(Integer id);
 
     void insert(PageInfo pageInfo);
 

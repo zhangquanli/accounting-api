@@ -1,12 +1,12 @@
 package com.github.zhangquanli.accounting.controller;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.PageInfo;
 import com.github.zhangquanli.accounting.service.PageInfoService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
-import java.util.List;
 
 import static com.github.zhangquanli.accounting.entity.base.PageInfo.Type.VIRTUALITY;
 
@@ -25,9 +25,14 @@ public class PageInfoController {
         this.pageInfoService = pageInfoService;
     }
 
-    @GetMapping("/selectTree")
-    public List<PageInfo> selectTree() {
-        return pageInfoService.selectTree();
+    @GetMapping
+    public ListResult<PageInfo> selectAll() {
+        return pageInfoService.selectAll();
+    }
+
+    @GetMapping("/{id}")
+    public PageInfo selectOne(@PathVariable Integer id) {
+        return pageInfoService.selectOne(id);
     }
 
     @PostMapping

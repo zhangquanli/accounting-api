@@ -1,5 +1,6 @@
 package com.github.zhangquanli.accounting.service.impl;
 
+import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.User;
 import com.github.zhangquanli.accounting.entity.base.UserRelRole;
 import com.github.zhangquanli.accounting.query.PageableQuery;
@@ -7,11 +8,12 @@ import com.github.zhangquanli.accounting.query.UserQuery;
 import com.github.zhangquanli.accounting.repository.UserRepository;
 import com.github.zhangquanli.accounting.service.UserService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> selectPage(UserQuery userQuery, PageableQuery pageableQuery) {
+    public ListResult<User> selectAll(UserQuery userQuery, PageableQuery pageableQuery) {
         Specification<User> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (userQuery.getUsername() != null) {
@@ -42,8 +44,14 @@ public class UserServiceImpl implements UserService {
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
-        PageRequest pageRequest = PageRequest.of(pageableQuery.getPage() - 1, pageableQuery.getSize());
-        return userRepository.findAll(specification, pageRequest);
+        Pageable pageable = PageableQuery.toPageable(pageableQuery);
+        Page<User> users = userRepository.findAll(specification, pageable);
+        return ListResult.create(users);
+    }
+
+    @Override
+    public User selectOne(Integer id) {
+        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
