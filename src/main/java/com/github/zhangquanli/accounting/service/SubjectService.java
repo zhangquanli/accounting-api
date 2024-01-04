@@ -7,9 +7,6 @@ import java.util.List;
 
 /**
  * 科目服务类
- *
- * @author zhangquanli
- * @since 2021/12/20 11:18:00
  */
 public interface SubjectService {
     List<Subject> selectList(SubjectQuery subjectQuery);

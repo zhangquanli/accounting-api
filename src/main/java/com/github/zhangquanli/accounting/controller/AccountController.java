@@ -9,9 +9,6 @@ import java.util.List;
 
 /**
  * 账簿管理
- *
- * @author zhangquanli
- * @since 2021/12/22 10:32:00
  */
 @RequestMapping("/accounts")
 @RestController

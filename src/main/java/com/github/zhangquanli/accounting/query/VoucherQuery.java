@@ -8,9 +8,6 @@ import java.time.LocalDate;
 
 /**
  * 凭证查询类
- *
- * @author zhangquanli
- * @since 2021/12/31 17:54:00
  */
 @Getter
 @Setter

@@ -7,23 +7,20 @@ import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.UserQuery;
 import com.github.zhangquanli.accounting.repository.UserRepository;
 import com.github.zhangquanli.accounting.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * 用户管理
- *
- * @author zhangquanli
- * @since 2023/3/14
  */
 @Transactional(rollbackFor = RuntimeException.class)
 @Service
@@ -78,7 +75,7 @@ public class UserServiceImpl implements UserService {
         List<UserRelRole> userRelRoles = user.getUserRelRoles()
                 .stream()
                 .peek(userRelRole -> userRelRole.setUser(user))
-                .collect(Collectors.toList());
+                .toList();
         user.getUserRelRoles().clear();
         user.getUserRelRoles().addAll(userRelRoles);
 

@@ -1,19 +1,14 @@
 package com.github.zhangquanli.accounting.entity.area;
 
 import com.github.zhangquanli.accounting.entity.BaseEntity;
-import com.github.zhangquanli.accounting.entity.area.City;
-import com.github.zhangquanli.accounting.entity.area.Town;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Set;
 
 /**
  * 区、县、自治县
- *
- * @author zhangquanli
- * @since 2023/3/2
  */
 @Entity
 @Getter

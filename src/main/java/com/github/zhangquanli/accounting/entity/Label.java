@@ -1,19 +1,16 @@
 package com.github.zhangquanli.accounting.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import java.util.List;
 
 /**
  * 标签
- *
- * @author zhangquanli
- * @since 2021/12/20 10:02:00
  */
 @Entity
 @Getter

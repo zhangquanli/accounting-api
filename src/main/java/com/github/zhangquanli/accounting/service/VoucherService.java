@@ -7,9 +7,6 @@ import org.springframework.data.domain.Page;
 
 /**
  * 凭证服务类
- *
- * @author zhangquanli
- * @since 2021/12/21 16:41:00
  */
 public interface VoucherService {
     Page<Voucher> selectPage(VoucherQuery voucherQuery, PageableQuery pageableQuery);

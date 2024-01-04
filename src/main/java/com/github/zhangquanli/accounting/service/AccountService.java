@@ -7,9 +7,6 @@ import java.util.List;
 
 /**
  * 账簿服务类
- *
- * @author zhangquanli
- * @since 2021/12/22 10:40:00
  */
 public interface AccountService {
     List<Account> selectList(AccountQuery accountQuery);

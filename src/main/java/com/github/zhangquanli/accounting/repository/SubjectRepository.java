@@ -8,9 +8,6 @@ import java.util.List;
 
 /**
  * 科目仓库类
- *
- * @author zhangquanli
- * @since 2021/12/20 12:47:00
  */
 public interface SubjectRepository extends JpaRepository<Subject, Integer>, JpaSpecificationExecutor<Subject> {
     List<Subject> findByIdIn(List<Integer> ids);

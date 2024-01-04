@@ -6,9 +6,6 @@ import lombok.Setter;
 
 /**
  * 会计科目查询类
- *
- * @author zhangquanli
- * @since 2022/1/18 11:13:00
  */
 @Getter
 @Setter

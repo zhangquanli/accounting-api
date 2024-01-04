@@ -1,21 +1,18 @@
 package com.github.zhangquanli.accounting.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
  * 科目余额
- *
- * @author zhangquanli
- * @since 2021/12/22 8:50:00
  */
 @Entity
 @Getter

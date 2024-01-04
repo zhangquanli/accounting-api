@@ -3,15 +3,11 @@ package com.github.zhangquanli.accounting.controller;
 import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.Role;
 import com.github.zhangquanli.accounting.service.RoleService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * 角色管理
- *
- * @author zhangquanli
- * @since 2023/2/28
  */
 @RequestMapping("/roles")
 @RestController

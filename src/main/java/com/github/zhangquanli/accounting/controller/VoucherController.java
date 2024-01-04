@@ -4,16 +4,12 @@ import com.github.zhangquanli.accounting.entity.Voucher;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.VoucherQuery;
 import com.github.zhangquanli.accounting.service.VoucherService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 /**
  * 凭证管理
- *
- * @author zhangquanli
- * @since 2021/12/20 13:22:00
  */
 @RequestMapping("/vouchers")
 @RestController

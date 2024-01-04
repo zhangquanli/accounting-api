@@ -2,21 +2,17 @@ package com.github.zhangquanli.accounting.entity.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpMethod;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
-
 /**
  * 接口信息
- *
- * @author zhangquanli
- * @since 2023/2/27
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity

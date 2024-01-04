@@ -4,21 +4,18 @@ import com.github.zhangquanli.accounting.entity.Subject;
 import com.github.zhangquanli.accounting.query.SubjectQuery;
 import com.github.zhangquanli.accounting.repository.SubjectRepository;
 import com.github.zhangquanli.accounting.service.SubjectService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 科目服务类
- *
- * @author zhangquanli
- * @since 2021/12/20 11:18:00
  */
 @Transactional(rollbackFor = RuntimeException.class)
 @Service

@@ -7,12 +7,12 @@ import com.github.zhangquanli.accounting.entity.base.RoleRelDisplayColumn;
 import com.github.zhangquanli.accounting.entity.base.RoleRelPageInfo;
 import com.github.zhangquanli.accounting.repository.RoleRepository;
 import com.github.zhangquanli.accounting.service.RoleService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,7 +76,7 @@ public class RoleServiceImpl implements RoleService {
         List<RoleRelPageInfo> pageInfos = role.getRoleRelPageInfos()
                 .stream()
                 .peek(roleRelPageInfo -> roleRelPageInfo.setRole(role))
-                .collect(Collectors.toList());
+                .toList();
         role.getRoleRelPageInfos().clear();
         role.getRoleRelPageInfos().addAll(pageInfos);
 
@@ -84,7 +84,7 @@ public class RoleServiceImpl implements RoleService {
         List<RoleRelComponentInfo> componentInfos = role.getRoleRelComponentInfos()
                 .stream()
                 .peek(roleRelComponentInfo -> roleRelComponentInfo.setRole(role))
-                .collect(Collectors.toList());
+                .toList();
         role.getRoleRelComponentInfos().clear();
         role.getRoleRelComponentInfos().addAll(componentInfos);
 
@@ -92,7 +92,7 @@ public class RoleServiceImpl implements RoleService {
         List<RoleRelDisplayColumn> displayColumns = role.getRoleRelDisplayColumns()
                 .stream()
                 .peek(roleRelDisplayColumn -> roleRelDisplayColumn.setRole(role))
-                .collect(Collectors.toList());
+                .toList();
         role.getRoleRelDisplayColumns().clear();
         role.getRoleRelDisplayColumns().addAll(displayColumns);
 

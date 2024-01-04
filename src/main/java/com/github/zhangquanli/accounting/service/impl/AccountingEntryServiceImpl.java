@@ -5,6 +5,7 @@ import com.github.zhangquanli.accounting.query.AccountingEntryQuery;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.repository.AccountingEntryRepository;
 import com.github.zhangquanli.accounting.service.AccountingEntryService;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,16 +14,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 描述
- *
- * @author zhangquanli
- * @since 2022/1/5 10:13:00
- */
 @Service
 public class AccountingEntryServiceImpl implements AccountingEntryService {
 
@@ -77,7 +71,7 @@ public class AccountingEntryServiceImpl implements AccountingEntryService {
             }
             // 摘要
             if (accountingEntryQuery.getSummary() != null &&
-                    !accountingEntryQuery.getSummary().trim().equals("")) {
+                    !accountingEntryQuery.getSummary().trim().isEmpty()) {
                 Predicate predicate = cb.like(root.get("summary"),
                         accountingEntryQuery.getSummary() + "%");
                 predicates.add(predicate);

@@ -9,6 +9,8 @@ import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.SubjectQuery;
 import com.github.zhangquanli.accounting.service.AccountingEntryService;
 import com.github.zhangquanli.accounting.service.SubjectService;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,20 +22,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
 /**
  * 会计分录管理
- *
- * @author zhangquanli
- * @since 2022/1/5 10:05:00
  */
 @Slf4j
 @RequestMapping("/accountingEntries")
@@ -92,7 +90,7 @@ public class AccountingEntryController {
             }
             // 写入响应流
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            String filename = URLEncoder.encode("会计分录_" + System.currentTimeMillis() + ".xlsx", "UTF-8");
+            String filename = URLEncoder.encode("会计分录_" + System.currentTimeMillis() + ".xlsx", StandardCharsets.UTF_8);
             response.setHeader("Content-Disposition", "attachment;filename=" + filename);
             OutputStream outputStream = response.getOutputStream();
             workbook.write(outputStream);

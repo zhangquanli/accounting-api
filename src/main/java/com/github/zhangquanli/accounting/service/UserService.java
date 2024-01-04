@@ -7,9 +7,6 @@ import com.github.zhangquanli.accounting.query.UserQuery;
 
 /**
  * 用户管理
- *
- * @author zhangquanli
- * @since 2023/3/14
  */
 public interface UserService {
     ListResult<User> selectAll(UserQuery userQuery, PageableQuery pageableQuery);

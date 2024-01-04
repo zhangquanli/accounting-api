@@ -7,9 +7,6 @@ import java.util.List;
 
 /**
  * 会计科目余额
- *
- * @author zhangquanli
- * @since 2021/12/27 10:50:00
  */
 public interface SubjectBalanceService {
     List<SubjectBalance> selectList(SubjectBalanceQuery subjectBalanceQuery);

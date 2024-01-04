@@ -5,15 +5,11 @@ import com.github.zhangquanli.accounting.entity.base.User;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.query.UserQuery;
 import com.github.zhangquanli.accounting.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * 用户管理
- *
- * @author zhangquanli
- * @since 2023/3/14
  */
 @RequestMapping("/users")
 @RestController

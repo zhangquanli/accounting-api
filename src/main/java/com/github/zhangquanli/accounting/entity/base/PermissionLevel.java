@@ -20,9 +20,6 @@ import java.util.stream.Stream;
 
 /**
  * 权限等级
- *
- * @author zhangquanli
- * @since 2023/3/15
  */
 public enum PermissionLevel {
     ALL("全部", "", null) {

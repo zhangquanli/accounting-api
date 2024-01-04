@@ -4,13 +4,13 @@ import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.*;
 import com.github.zhangquanli.accounting.repository.PageInfoRepository;
 import com.github.zhangquanli.accounting.service.PageInfoService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,7 +76,7 @@ public class PageInfoServiceImpl implements PageInfoService {
                     processComponent(componentInfo);
                     componentInfo.setPageInfo(pageInfo);
                 })
-                .collect(Collectors.toList());
+                .toList();
         pageInfo.getComponentInfos().clear();
         pageInfo.getComponentInfos().addAll(componentInfos);
 
@@ -94,7 +94,7 @@ public class PageInfoServiceImpl implements PageInfoService {
         List<DisplayColumn> displayColumns = componentInfo.getDisplayColumns()
                 .stream()
                 .peek(displayColumn -> displayColumn.setComponentInfo(componentInfo))
-                .collect(Collectors.toList());
+                .toList();
         componentInfo.getDisplayColumns().clear();
         componentInfo.getDisplayColumns().addAll(displayColumns);
     }

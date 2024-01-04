@@ -1,20 +1,17 @@
 package com.github.zhangquanli.accounting.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * 基础实体
- *
- * @author zhangquanli
- * @since 2021/12/20 11:06:00
  */
 @MappedSuperclass
 @Getter

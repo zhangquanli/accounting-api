@@ -3,18 +3,15 @@ package com.github.zhangquanli.accounting.controller;
 import com.github.zhangquanli.accounting.entity.ListResult;
 import com.github.zhangquanli.accounting.entity.base.PageInfo;
 import com.github.zhangquanli.accounting.service.PageInfoService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Collections;
 
 import static com.github.zhangquanli.accounting.entity.base.PageInfo.Type.VIRTUALITY;
 
 /**
  * 页面管理
- *
- * @author zhangquanli
- * @since 2023/2/28
  */
 @RequestMapping("/pageInfos")
 @RestController

@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 
 /**
  * 借贷类型
- *
- * @author zhangquanli
- * @since 2021/12/22 8:51:00
  */
 public enum Type {
     /**

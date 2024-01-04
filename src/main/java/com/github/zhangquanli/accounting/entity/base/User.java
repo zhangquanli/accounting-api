@@ -2,23 +2,20 @@ package com.github.zhangquanli.accounting.entity.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 /**
  * 用户
- *
- * @author zhangquanli
- * @since 2022/3/22 16:45:00
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity

@@ -1,21 +1,17 @@
 package com.github.zhangquanli.accounting.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
 
 /**
  * 会计科目
  * <p>
  * 会计科目最多只能有四级
- *
- * @author zhangquanli
- * @since 2021/12/20 10:01:00
  */
 @Entity
 @Getter

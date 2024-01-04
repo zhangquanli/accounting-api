@@ -11,9 +11,6 @@ import java.util.List;
 
 /**
  * 会计科目余额
- *
- * @author zhangquanli
- * @since 2021/12/27 10:47:00
  */
 @RequestMapping("/subjectBalances")
 @RestController

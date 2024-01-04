@@ -3,12 +3,12 @@ package com.github.zhangquanli.accounting.service.impl;
 import com.github.zhangquanli.accounting.entity.base.PermissionColumn;
 import com.github.zhangquanli.accounting.repository.PermissionColumnRepository;
 import com.github.zhangquanli.accounting.service.PermissionColumService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 

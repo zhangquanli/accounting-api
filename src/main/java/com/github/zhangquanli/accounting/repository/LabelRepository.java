@@ -7,9 +7,6 @@ import java.util.Optional;
 
 /**
  * 标签仓库类
- *
- * @author zhangquanli
- * @since 2021/12/20 13:13:00
  */
 public interface LabelRepository extends JpaRepository<Label, Integer> {
     Optional<Label> findByMark(String mark);

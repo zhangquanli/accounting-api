@@ -8,9 +8,6 @@ import org.springframework.util.Assert;
 
 /**
  * 分页请求封装类
- *
- * @author zhangquanli
- * @since 2021/12/31 18:11:00
  */
 @Getter
 @Setter

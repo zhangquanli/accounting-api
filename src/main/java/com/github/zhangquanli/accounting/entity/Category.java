@@ -7,9 +7,6 @@ import java.math.BigDecimal;
  * <p>
  * 资产类、成本类科目，借方增加，贷方减少
  * 债类、所有者权益类、损益类科目，借方减少，贷方增加
- *
- * @author zhangquanli
- * @since 2021/12/30 10:03:00
  */
 public enum Category {
     /**

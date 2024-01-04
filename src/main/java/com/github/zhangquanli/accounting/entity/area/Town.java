@@ -1,19 +1,15 @@
 package com.github.zhangquanli.accounting.entity.area;
 
 import com.github.zhangquanli.accounting.entity.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 /**
  * 乡、镇
- *
- * @author zhangquanli
- * @since 2023/3/2
  */
 @Entity
 @Getter

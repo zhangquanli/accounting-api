@@ -5,20 +5,17 @@ import com.github.zhangquanli.accounting.config.LoginUserCache;
 import com.github.zhangquanli.accounting.entity.base.User;
 import com.github.zhangquanli.accounting.entity.base.UserRelRole;
 import com.github.zhangquanli.accounting.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 /**
  * 认证
- *
- * @author zhangquanli
- * @since 2023/3/17
  */
 @RequestMapping("/authentication")
 @RestController

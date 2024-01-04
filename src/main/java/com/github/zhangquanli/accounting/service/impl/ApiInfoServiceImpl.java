@@ -6,14 +6,14 @@ import com.github.zhangquanli.accounting.query.ApiInfoQuery;
 import com.github.zhangquanli.accounting.query.PageableQuery;
 import com.github.zhangquanli.accounting.repository.ApiInfoRepository;
 import com.github.zhangquanli.accounting.service.ApiInfoService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -7,6 +7,8 @@ import com.github.zhangquanli.accounting.repository.LabelRepository;
 import com.github.zhangquanli.accounting.repository.SubjectBalanceRepository;
 import com.github.zhangquanli.accounting.repository.VoucherRepository;
 import com.github.zhangquanli.accounting.service.VoucherService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +18,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.Predicate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,9 +26,6 @@ import java.util.stream.Collectors;
 
 /**
  * 凭证服务类
- *
- * @author zhangquanli
- * @since 2021/12/21 16:41:00
  */
 @Transactional(rollbackFor = RuntimeException.class)
 @Service

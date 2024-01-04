@@ -16,9 +16,6 @@ import java.util.stream.Stream;
 
 /**
  * 会计科目余额
- *
- * @author zhangquanli
- * @since 2021/12/27 10:51:00
  */
 @Transactional(rollbackFor = RuntimeException.class)
 @Service

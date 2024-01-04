@@ -14,9 +14,6 @@ import java.util.List;
 
 /**
  * 权限字段
- *
- * @author zhangquanli
- * @since 2023/3/16
  */
 @RequestMapping("/permissionColumns")
 @RestController

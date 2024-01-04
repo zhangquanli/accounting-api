@@ -8,13 +8,10 @@ import java.time.LocalDate;
 
 /**
  * 描述
- *
- * @author zhangquanli
- * @since 2022/1/5 10:07:00
  */
 @Getter
 @Setter
-public class AccountingEntryQuery  {
+public class AccountingEntryQuery {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startVoucherDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
