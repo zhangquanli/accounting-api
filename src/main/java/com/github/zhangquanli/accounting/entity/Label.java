@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * 标签
  */
+@Table(name = "t_label")
 @Entity
 @Getter
 @Setter
@@ -24,10 +26,10 @@ public class Label extends BaseEntity {
     private String name;
 
     /**
-     * 标签值
+     * 标签内容
      */
     @Column(nullable = false)
-    private String value;
+    private String content;
 
     /**
      * 标签标识

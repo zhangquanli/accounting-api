@@ -2,10 +2,7 @@ package com.github.zhangquanli.accounting.entity.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +11,7 @@ import lombok.Setter;
  * 用户关联角色
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Table(name = "t_user_rel_role")
 @Entity
 @Getter
 @Setter
@@ -23,21 +21,21 @@ public class UserRelRole extends BaseEntity {
      */
     @NotNull
     @Column(nullable = false)
-    private String value;
+    private String permissionCode;
     /**
      * 权限字段，如：锦江区
      */
     @NotNull
     @Column(nullable = false)
-    private String label;
+    private String permissionName;
     /**
      * 完整的权限字段，如：0,51,5101,510104
      */
-    private String fullValue;
+    private String fullPermissionCode;
     /**
      * 完整的权限字段，如：全部,四川省,成都市,锦江区
      */
-    private String fullLabel;
+    private String fullPermissionName;
     @NotNull
     @JsonIgnoreProperties({"roleRelPageInfos", "roleRelComponentInfos", "roleRelDisplayColumns", "parent", "children"})
     @ManyToOne

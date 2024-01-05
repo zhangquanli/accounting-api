@@ -143,7 +143,7 @@ public class AccountingEntryController {
             content.put("balance", accountingEntry.getBalance());
             content.put("summary", accountingEntry.getSummary());
             for (Label label : accountingEntry.getLabels()) {
-                content.computeIfAbsent(label.getName(), k -> label.getValue());
+                content.computeIfAbsent(label.getName(), k -> label.getContent());
             }
             contents.add(content);
         }

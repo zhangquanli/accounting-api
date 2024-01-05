@@ -5,9 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 当前登录用户缓存
- *
- * @author zhangquanli
- * @since 2023/3/20
  */
 public abstract class LoginUserCache {
     private static final Map<String, LoginUser> CACHE = new ConcurrentHashMap<>();

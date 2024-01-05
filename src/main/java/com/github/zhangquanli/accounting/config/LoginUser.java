@@ -8,9 +8,6 @@ import lombok.Setter;
 
 /**
  * 当前登录用户
- *
- * @author zhangquanli
- * @since 2023/3/21
  */
 @Builder
 @Getter

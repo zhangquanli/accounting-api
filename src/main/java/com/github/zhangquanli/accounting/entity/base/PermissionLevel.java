@@ -5,10 +5,10 @@ import com.github.zhangquanli.accounting.entity.area.City;
 import com.github.zhangquanli.accounting.entity.area.District;
 import com.github.zhangquanli.accounting.entity.area.Province;
 import com.github.zhangquanli.accounting.entity.area.Town;
-import com.github.zhangquanli.accounting.repository.CityRepository;
-import com.github.zhangquanli.accounting.repository.DistrictRepository;
-import com.github.zhangquanli.accounting.repository.ProvinceRepository;
-import com.github.zhangquanli.accounting.repository.TownRepository;
+import com.github.zhangquanli.accounting.repository.area.CityRepository;
+import com.github.zhangquanli.accounting.repository.area.DistrictRepository;
+import com.github.zhangquanli.accounting.repository.area.ProvinceRepository;
+import com.github.zhangquanli.accounting.repository.area.TownRepository;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,7 +47,7 @@ public enum PermissionLevel {
             List<Province> provinces = repository.findAll();
             return provinces.stream().map(province -> {
                 OptionType optionType = new OptionType();
-                optionType.setValue(province.getCode());
+                optionType.setValue(province.getContent());
                 optionType.setLabel(province.getName());
                 OptionType.Level level = OptionType.Level.builder()
                         .value(this.toString()).label(this.getName()).build();
@@ -60,10 +60,10 @@ public enum PermissionLevel {
         @Override
         public List<OptionType> getOptions(String parentCode) {
             CityRepository repository = SpringContextHolder.getBean(CityRepository.class);
-            List<City> cities = repository.findByProvinceCode(parentCode);
+            List<City> cities = repository.findByProvinceContent(parentCode);
             return cities.stream().map(city -> {
                 OptionType optionType = new OptionType();
-                optionType.setValue(city.getCode());
+                optionType.setValue(city.getContent());
                 optionType.setLabel(city.getName());
                 OptionType.Level level = OptionType.Level.builder()
                         .value(this.toString()).label(this.getName()).build();
@@ -77,10 +77,10 @@ public enum PermissionLevel {
         @Override
         public List<OptionType> getOptions(String parentCode) {
             DistrictRepository repository = SpringContextHolder.getBean(DistrictRepository.class);
-            List<District> districts = repository.findByCityCode(parentCode);
+            List<District> districts = repository.findByCityContent(parentCode);
             return districts.stream().map(district -> {
                 OptionType optionType = new OptionType();
-                optionType.setValue(district.getCode());
+                optionType.setValue(district.getContent());
                 optionType.setLabel(district.getName());
                 OptionType.Level level = OptionType.Level.builder()
                         .value(this.toString()).label(this.getName()).build();
@@ -93,10 +93,10 @@ public enum PermissionLevel {
         @Override
         public List<OptionType> getOptions(String parentCode) {
             TownRepository repository = SpringContextHolder.getBean(TownRepository.class);
-            List<Town> towns = repository.findByDistrictCode(parentCode);
+            List<Town> towns = repository.findByDistrictContent(parentCode);
             return towns.stream().map(town -> {
                 OptionType optionType = new OptionType();
-                optionType.setValue(town.getCode());
+                optionType.setValue(town.getContent());
                 optionType.setLabel(town.getName());
                 OptionType.Level level = OptionType.Level.builder()
                         .value(this.toString()).label(this.getName()).build();

@@ -11,6 +11,7 @@ import lombok.Setter;
  * 角色关联的页面
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Table(name = "b_role_rel_page_info")
 @Entity
 @Getter
 @Setter

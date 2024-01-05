@@ -18,6 +18,7 @@ import java.util.List;
  * 用户
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Table(name = "b_user")
 @Entity
 @Getter
 @Setter

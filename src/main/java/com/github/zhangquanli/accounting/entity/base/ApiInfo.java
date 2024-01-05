@@ -4,12 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.zhangquanli.accounting.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpMethod;
 
 /**
  * 接口信息
@@ -35,7 +32,6 @@ public class ApiInfo extends BaseEntity {
      * HTTP方法
      */
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private HttpMethod httpMethod;
+    private String httpMethod;
 }

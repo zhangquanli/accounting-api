@@ -115,7 +115,7 @@ public class VoucherServiceImpl implements VoucherService {
                         throw new RuntimeException("录入的标签数据异常");
                     }
                     label.setName(split[0]);
-                    label.setValue(split[1]);
+                    label.setContent(split[1]);
                     return label;
                 }))
                 .collect(Collectors.toList());
